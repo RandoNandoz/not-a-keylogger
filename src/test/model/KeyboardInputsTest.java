@@ -1,5 +1,5 @@
 package model;
 
-class MyModelTest {
+class KeyboardInputsTest {
     // delete or rename this class!
 }
