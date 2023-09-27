@@ -27,5 +27,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="github.kwhat.jnativehook" level="project" />
   </component>
 </module>
