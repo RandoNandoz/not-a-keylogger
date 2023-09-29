@@ -38,6 +38,7 @@ For instance:
 - I want to be able to edit the instructions I have recorded.
 - I want to share my recipes with other people.
 - I want to assign keyboard shortcuts to my recipes.
+- I want to be able to view my recorded actions in a list style, scrollable view.
 </details>
 
 
