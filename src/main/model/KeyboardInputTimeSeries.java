@@ -15,7 +15,7 @@ public class KeyboardInputTimeSeries {
 
     // EFFECTS: plays back a list of inputs on the computer by their time order
     public void playback() {
-        
+
     }
 
     public List<KeyboardInputTime> getInputTimes() {

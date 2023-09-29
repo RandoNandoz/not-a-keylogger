@@ -3,8 +3,8 @@ package model;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
 public class KeyboardInputTime {
+    private final double timeSinceStart;
     private NativeKeyEvent event;
-    private double timeSinceStart;
 
     public KeyboardInputTime(NativeKeyEvent event, double timeSinceStart) {
         this.event = event;

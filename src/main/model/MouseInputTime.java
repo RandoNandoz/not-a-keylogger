@@ -3,8 +3,8 @@ package model;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
 public class MouseInputTime {
+    private final double timeSinceStart;
     private NativeMouseEvent event;
-    private double timeSinceStart;
 
     // EFFECTS: creates new class that wraps a MouseEvent and time since recording
     public MouseInputTime(NativeMouseEvent event, double timeSinceStart) {
