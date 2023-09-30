@@ -1,3 +1,8 @@
+/*
+* THIS IS NOT MY CODE
+* SAMPLE CODE FROM DOCUMENTATION TO PLAY AROUND WITH NATIVEMOUSEVENTS
+* */
+
 package model;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
