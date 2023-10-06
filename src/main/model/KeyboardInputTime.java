@@ -2,15 +2,18 @@ package model;
 
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
+import java.time.Duration;
+
 public class KeyboardInputTime {
-    private final double timeSinceStart;
+    private final Duration timeSinceStart;
     private NativeKeyEvent event;
 
-    public KeyboardInputTime(NativeKeyEvent event, double timeSinceStart) {
+    public KeyboardInputTime(NativeKeyEvent event, Duration timeSinceStart) {
         this.event = event;
         this.timeSinceStart = timeSinceStart;
     }
 
+    // getters and setters
     public NativeKeyEvent getEvent() {
         return event;
     }
@@ -19,7 +22,7 @@ public class KeyboardInputTime {
         this.event = event;
     }
 
-    public double getTimeSinceStart() {
+    public Duration getTimeSinceStart() {
         return timeSinceStart;
     }
 }
