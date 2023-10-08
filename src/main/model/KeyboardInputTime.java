@@ -7,7 +7,7 @@ package model;
  */
 public class KeyboardInputTime implements Comparable<KeyboardInputTime> {
     private final long nsSinceStart;
-    private int keyId;
+    private final int keyId;
 
     // EFFECTS: instantiates a new KeyBoardInputTime object with given Key ID and time since start of recording
     public KeyboardInputTime(int keyId, long nsSinceStart) {
@@ -20,9 +20,6 @@ public class KeyboardInputTime implements Comparable<KeyboardInputTime> {
         return this.keyId;
     }
 
-    public void setKeyId(int keyId) {
-        this.keyId = keyId;
-    }
 
     public long getNsSinceStart() {
         return nsSinceStart;
