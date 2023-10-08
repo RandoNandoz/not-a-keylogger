@@ -1,28 +1,35 @@
 package model;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+/**
+ * Class to represent unit of data that stores keyId from a NativeKeyEvent, and when it was
+ * recorded in nanoseconds since start.
+ * @implNote This class has a natural ordering that is inconsistent with equals.
+ */
+public class KeyboardInputTime implements Comparable<KeyboardInputTime> {
+    private final long nsSinceStart;
+    private int keyId;
 
-import java.time.Duration;
-
-public class KeyboardInputTime {
-    private final Duration timeSinceStart;
-    private NativeKeyEvent event;
-
-    public KeyboardInputTime(NativeKeyEvent event, Duration timeSinceStart) {
-        this.event = event;
-        this.timeSinceStart = timeSinceStart;
+    // EFFECTS: instantiates a new KeyBoardInputTime object with given Key ID and time since start of recording
+    public KeyboardInputTime(int keyId, long nsSinceStart) {
+        this.keyId = keyId;
+        this.nsSinceStart = nsSinceStart;
     }
 
     // getters and setters
-    public NativeKeyEvent getEvent() {
-        return event;
+    public int getKeyId() {
+        return this.keyId;
     }
 
-    public void setEvent(NativeKeyEvent event) {
-        this.event = event;
+    public void setKeyId(int keyId) {
+        this.keyId = keyId;
     }
 
-    public Duration getTimeSinceStart() {
-        return timeSinceStart;
+    public long getNsSinceStart() {
+        return nsSinceStart;
+    }
+
+    @Override
+    public int compareTo(KeyboardInputTime o) {
+        return Long.compare(nsSinceStart, o.getNsSinceStart());
     }
 }
