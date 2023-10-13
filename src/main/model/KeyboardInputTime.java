@@ -12,7 +12,6 @@ public class KeyboardInputTime extends InputTime {
 
     // EFFECTS: instantiates a new KeyBoardInputTime object with given Key ID and time since start of recording
     public KeyboardInputTime(int keyId, KeyPress keyPress, long nsSinceStart) {
-        super();
         this.keyId = keyId;
         this.keyPress = keyPress;
         this.nsRecordedTimeStamp = nsSinceStart;

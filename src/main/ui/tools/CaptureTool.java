@@ -13,12 +13,14 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     private final TimeSeries<KeyboardInputTime> keyboardCaptures;
     private final TimeSeries<MouseInputTime> mouseCaptures;
 
+
     // EFFECTS: creates a new CaptureTool that captures user inputs, with time series to be modified.
     public CaptureTool(TimeSeries<KeyboardInputTime> keyboardCaptures, TimeSeries<MouseInputTime> mouseCaptures) {
         this.keyboardCaptures = keyboardCaptures;
         this.mouseCaptures = mouseCaptures;
     }
 
+    // MODIFIES: this
     // EFFECTS: adds the key id, key press type (either up or down),
     // and the time it was pressed to the keyboard captures list
     @Override
@@ -30,6 +32,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
         ));
     }
 
+    // MODIFIES: this
     // EFFECTS: adds the key id, key press type (either up or down),
     // and the time it was pressed to the keyboard captures list
     @Override
@@ -41,6 +44,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
         ));
     }
 
+    // MODIFIES: this
     // EFFECTS: adds mouse event when mouse pressed, and the time it was pressed.
     @Override
     public void nativeMousePressed(NativeMouseEvent e) {
@@ -63,6 +67,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
         );
     }
 
+    // MODIFIES: this
     // EFFECTS: adds mouse event when mouse moved and time pressed.
     @Override
     public void nativeMouseMoved(NativeMouseEvent e) {

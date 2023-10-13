@@ -1,8 +1,3 @@
-/*
- * THIS IS NOT MY CODE
- * SAMPLE CODE FROM DOCUMENTATION TO PLAY AROUND WITH NATIVEMOUSEVENTS
- * */
-
 package model;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
@@ -13,7 +8,6 @@ public class MouseInputTime extends InputTime {
     // REQUIRES: nsSinceStart >= 0
     // EFFECTS: creates new class that wraps a MouseEvent and time since recording
     public MouseInputTime(NativeMouseEvent event, long nsSinceStart) {
-        super();
         this.event = event;
         this.nsRecordedTimeStamp = nsSinceStart;
     }

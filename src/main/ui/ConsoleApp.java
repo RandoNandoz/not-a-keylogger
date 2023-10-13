@@ -18,6 +18,7 @@ public class ConsoleApp {
     int currentIndexCapture;
 
 
+    // EFFECTS: starts a new console version of the kb capture tool, with no captures,
     public ConsoleApp() {
         currentIndexCapture = 0;
         scanner = new Scanner(System.in);
@@ -26,6 +27,7 @@ public class ConsoleApp {
         runApp();
     }
 
+    // EFFECTS: starts the app, terminates when q is selected.
     private void runApp() {
         String cmd;
         boolean keepGoing = true;
@@ -42,6 +44,9 @@ public class ConsoleApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: dispatches calls to helper methods when different options are picked,
+    // adds new capture when capture picked
     private void processCommand(String cmd) {
         switch (cmd) {
             case "r":
@@ -59,6 +64,7 @@ public class ConsoleApp {
         }
     }
 
+    // EFFECTS: edits user's desired mouse/keyboard input
     private void editMouseOrKeyboard() {
         System.out.println("Input type of capture: ");
         String type = scanner.nextLine().toLowerCase();
@@ -78,6 +84,8 @@ public class ConsoleApp {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: edits keyboard on user choice
     private void handleKeyboard(int recordingNumber, int inputNumber) {
         KeyPress keyPress;
         System.out.print("Input Key ID: ");
@@ -100,15 +108,13 @@ public class ConsoleApp {
         );
     }
 
-    private void handleMouse() {
-
-    }
-
+    // EFFECTS: display all recorded inputs
     private void showRecordings() {
         showKeyboard();
         showMouse();
     }
 
+    // EFFECTS: shows all keyboard recordings
     private void showKeyboard() {
         System.out.println("Keyboard input captures:");
         for (int i = 0; i < keyboardCaptures.size(); i++) {
@@ -124,6 +130,7 @@ public class ConsoleApp {
         }
     }
 
+    // EFFECTS: shows all mouse recordings
     private void showMouse() {
         System.out.println("Mouse input captures: ");
         for (int i = 0; i < mouseCaptures.size(); i++) {
@@ -138,6 +145,7 @@ public class ConsoleApp {
         }
     }
 
+    // EFFECTS: shows options avail. to user.
     private void showOptions() {
         System.out.println("r - record");
         System.out.println("l - list out recorded inputs");
@@ -145,6 +153,9 @@ public class ConsoleApp {
         System.out.println("q - quit");
     }
 
+    // MODIFIES: this
+    // EFFECTS: captures user mouse and kb inputs, registers native hook, and prompts user (if needed, by os) for
+    // permission
     private void capture(int index) {
         var keyboardCapture = keyboardCaptures.get(index);
         var mouseCapture = mouseCaptures.get(index);
@@ -166,6 +177,7 @@ public class ConsoleApp {
         System.out.println("Capture made.");
     }
 
+    // EFFECTS: de-regs nativehook, stops recording user inputs.
     private void stopCapture() {
         try {
             GlobalScreen.unregisterNativeHook();
