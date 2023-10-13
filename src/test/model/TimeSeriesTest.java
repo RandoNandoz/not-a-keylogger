@@ -5,13 +5,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.lang.annotation.Native;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TimeSeriesTest {
     private Random rd;
@@ -19,13 +20,47 @@ class TimeSeriesTest {
 
     @BeforeEach
     void setUp() {
-        this.series = new TimeSeries<KeyboardInputTime>();
+        this.series = new TimeSeries<>();
         this.rd = new Random();
     }
 
     @Test
-    void testConstructor() {
+    void testConstructor() throws IllegalAccessException {
         assertEquals(0, series.getInputs().size());
+
+        // weird reflection hack
+        Field f;
+        try {
+            f = TimeSeries.class.getDeclaredField("startTime");
+        } catch (NoSuchFieldException e) {
+            // this should never happen
+            throw new RuntimeException(e);
+        }
+        f.setAccessible(true);
+
+
+        long startTimeInClass = (long) f.get(series);
+
+        assertEquals(startTimeInClass, series.getStartTime());
+    }
+
+    @Test
+    void testEditErrorThrowing() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            series.editKey(-1, new KeyboardInputTime(
+                    0,
+                    KeyPress.DOWN,
+                    0
+            ));
+        });
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            series.editKey(series.getInputs().size() + 40, new KeyboardInputTime(
+                    0,
+                    KeyPress.DOWN,
+                    0
+            ));
+        });
     }
 
     @Test
@@ -141,7 +176,7 @@ class TimeSeriesTest {
 
         assertEquals(NativeKeyEvent.VC_F4, series.getInputs().get(2).getKeyId());
         assertEquals(KeyPress.DOWN, series.getInputs().get(2).getKeyPress());
-        assertEquals(40, series.getInputs().get(2).getNsSinceStart());
+        assertEquals(40, series.getInputs().get(2).getNsRecordedTimeStamp());
     }
 
     @Test

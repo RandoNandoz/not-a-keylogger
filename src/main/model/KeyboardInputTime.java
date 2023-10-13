@@ -12,13 +12,13 @@ public class KeyboardInputTime extends InputTime {
 
     // EFFECTS: instantiates a new KeyBoardInputTime object with given Key ID and time since start of recording
     public KeyboardInputTime(int keyId, KeyPress keyPress, long nsSinceStart) {
+        super();
         this.keyId = keyId;
         this.keyPress = keyPress;
-        this.nsSinceStart = nsSinceStart;
+        this.nsRecordedTimeStamp = nsSinceStart;
     }
 
     // getters and setters
-
     public int getKeyId() {
         return keyId;
     }
@@ -29,6 +29,7 @@ public class KeyboardInputTime extends InputTime {
     }
 
 
+    // EFFECTS: true if the object given has the same params as this.
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -38,6 +39,6 @@ public class KeyboardInputTime extends InputTime {
             return false;
         }
         KeyboardInputTime that = (KeyboardInputTime) o;
-        return nsSinceStart == that.nsSinceStart && keyId == that.keyId && keyPress == that.keyPress;
+        return nsRecordedTimeStamp == that.nsRecordedTimeStamp && keyId == that.keyId && keyPress == that.keyPress;
     }
 }

@@ -6,9 +6,11 @@ import java.util.List;
 
 public class TimeSeries<T extends InputTime> {
     private final ArrayList<T> inputs;
+    private final long startTime;
 
     // EFFECTS: creates a new keyboard input times series capture with an empty list of captures
     public TimeSeries() {
+        startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
     }
 
@@ -35,12 +37,16 @@ public class TimeSeries<T extends InputTime> {
         }
     }
 
-    // REQUIRES: 0 <= index < this.getInputs().size(), inputTime.getNsSinceStart() >= 0
+    // REQUIRES: inputTime.getNsSinceStart() >= 0
     // MODIFIES: this
     // EFFECTS: modifies the NativeKeyEvent at this index
     //          preserves sorted order of data
     //          returns the new index of the key
+    //          throws IllegalArgumentException if index < 0 or larger or equal to than this.getInputs().size()
     public int editKey(int index, T inputTime) {
+        if (index < 0 || index >= this.getInputs().size()) {
+            throw new IllegalArgumentException("Invalid index to edit.");
+        }
 //        KeyboardInputTime inputToEdit = this.inputs.get(index);
         this.inputs.remove(index);
         this.inputs.add(inputTime);
@@ -58,5 +64,9 @@ public class TimeSeries<T extends InputTime> {
 
     public List<T> getInputs() {
         return this.inputs;
+    }
+
+    public long getStartTime() {
+        return startTime;
     }
 }

@@ -26,7 +26,7 @@ class KeyboardInputTimeTest {
     @Test
     void testConstructor() {
         assertEquals(NativeKeyEvent.VC_ESCAPE, kbInput1.getKeyId());
-        assertEquals(30, kbInput1.getNsSinceStart());
+        assertEquals(30, kbInput1.getNsRecordedTimeStamp());
     }
 
     @Test

@@ -7,21 +7,23 @@ package model;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
-import java.util.Objects;
-
 public class MouseInputTime extends InputTime {
     private final NativeMouseEvent event;
 
+    // REQUIRES: nsSinceStart >= 0
     // EFFECTS: creates new class that wraps a MouseEvent and time since recording
     public MouseInputTime(NativeMouseEvent event, long nsSinceStart) {
+        super();
         this.event = event;
-        this.nsSinceStart = nsSinceStart;
+        this.nsRecordedTimeStamp = nsSinceStart;
     }
 
+    // trivial getter
     public NativeMouseEvent getEvent() {
         return event;
     }
 
+    // EFFECTS: does deep comparison between given object and if they have the same params, return true, false otherwise
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -37,6 +39,6 @@ public class MouseInputTime extends InputTime {
                 && this.event.getY() == that.event.getY()
                 && this.event.getClickCount() == that.event.getClickCount()
                 && this.event.getButton() == that.event.getButton()
-                && this.nsSinceStart == that.nsSinceStart;
+                && this.nsRecordedTimeStamp == that.nsRecordedTimeStamp;
     }
 }

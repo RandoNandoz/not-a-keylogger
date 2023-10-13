@@ -1,14 +1,27 @@
 package model;
 
-abstract class InputTime implements Comparable<InputTime> {
-    protected long nsSinceStart;
+public abstract class InputTime implements Comparable<InputTime> {
+    protected long nsRecordedTimeStamp;
 
-    public long getNsSinceStart() {
-        return this.nsSinceStart;
+    // REQUIRES:  startTime < nsRecordedTimeStamp, that is, the recording must have started
+    // before event was captured.
+    // EFFECTS: computes the difference between the start of the recording, and the timestamp recorded.
+    // this is useful as we want to calculate when to send.
+    public long getDeltaTime(long startTime) {
+        return nsRecordedTimeStamp - startTime;
     }
 
+
+    // trivial getter
+    public long getNsRecordedTimeStamp() {
+        return this.nsRecordedTimeStamp;
+    }
+
+    // EFFECTS: returns -1 if o's timestamp < this's timestamp
+    //          returns 0 if they are equal
+    //          returns 1 if o's timestamp > this's timestamp.
     @Override
     public int compareTo(InputTime o) {
-        return Long.compare(nsSinceStart, o.getNsSinceStart());
+        return Long.compare(nsRecordedTimeStamp, o.getNsRecordedTimeStamp());
     }
 }

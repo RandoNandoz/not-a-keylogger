@@ -1,6 +1,5 @@
 package model;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +25,7 @@ class MouseInputTimeTest {
                 this.mouseInputTime.getEvent().getID()
         );
 
-        assertEquals(300, this.mouseInputTime.getNsSinceStart());
+        assertEquals(300, this.mouseInputTime.getNsRecordedTimeStamp());
     }
 
     @Test
