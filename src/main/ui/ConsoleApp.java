@@ -138,7 +138,7 @@ public class ConsoleApp {
             TimeSeries<MouseInputTime> mouseInputs = mouseCaptures.get(i);
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
-                System.out.printf("Input number %d: <X: %d, Y: %d, Event type: %s>",
+                System.out.printf("Input number %d: <X: %d, Y: %d, Event type: %s>\n",
                         j, eventTime.getEvent().getX(), eventTime.getEvent().getY(), eventTime.getEvent().paramString()
                 );
             }
@@ -167,18 +167,23 @@ public class ConsoleApp {
             System.exit(1);
         }
 
-        GlobalScreen.addNativeKeyListener(new CaptureTool(
+        CaptureTool tool = new CaptureTool(
                 keyboardCapture,
                 mouseCapture
-        ));
+        );
+
+        GlobalScreen.addNativeKeyListener(tool);
+        GlobalScreen.addNativeMouseListener(tool);
 
         scanner.nextLine();
-        stopCapture();
+        stopCapture(tool);
         System.out.println("Capture made.");
     }
 
-    // EFFECTS: de-regs nativehook, stops recording user inputs.
-    private void stopCapture() {
+    // MODIFIES: this
+    // EFFECTS: de-regs nativehook with given capturetool, stops recording user inputs, and removes last input (which
+    // is instruction to stop recording)
+    private void stopCapture(CaptureTool tool) {
         try {
             GlobalScreen.unregisterNativeHook();
         } catch (NativeHookException e) {
