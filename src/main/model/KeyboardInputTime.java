@@ -38,6 +38,6 @@ public class KeyboardInputTime extends InputTime {
             return false;
         }
         KeyboardInputTime that = (KeyboardInputTime) o;
-        return nsRecordedTimeStamp == that.nsRecordedTimeStamp && keyId == that.keyId && keyPress == that.keyPress;
+        return nsRecordedTimeStamp == that.nsRecordedTimeStamp & keyId == that.keyId & keyPress == that.keyPress;
     }
 }
