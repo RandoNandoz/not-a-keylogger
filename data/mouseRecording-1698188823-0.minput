@@ -1,0 +1,95 @@
+{
+    "inputs": [
+        {
+            "button": 1,
+            "clickCount": 1,
+            "x": -778,
+            "nsRecordedTimeStamp": 21189782858000,
+            "y": 967,
+            "id": 2501,
+            "modifiers": 256
+        },
+        {
+            "button": 1,
+            "clickCount": 1,
+            "x": -775,
+            "nsRecordedTimeStamp": 21189890136083,
+            "y": 960,
+            "id": 2502,
+            "modifiers": 0
+        },
+        {
+            "button": 1,
+            "clickCount": 1,
+            "x": -676,
+            "nsRecordedTimeStamp": 21191558354541,
+            "y": 683,
+            "id": 2501,
+            "modifiers": 256
+        },
+        {
+            "button": 1,
+            "clickCount": 1,
+            "x": -676,
+            "nsRecordedTimeStamp": 21191596161666,
+            "y": 683,
+            "id": 2502,
+            "modifiers": 0
+        },
+        {
+            "button": 1,
+            "clickCount": 2,
+            "x": -655,
+            "nsRecordedTimeStamp": 21191692689083,
+            "y": 686,
+            "id": 2501,
+            "modifiers": 256
+        },
+        {
+            "button": 1,
+            "clickCount": 2,
+            "x": -655,
+            "nsRecordedTimeStamp": 21191770433333,
+            "y": 686,
+            "id": 2502,
+            "modifiers": 0
+        },
+        {
+            "button": 1,
+            "clickCount": 3,
+            "x": 243,
+            "nsRecordedTimeStamp": 21192108803708,
+            "y": 471,
+            "id": 2501,
+            "modifiers": 256
+        },
+        {
+            "button": 1,
+            "clickCount": 3,
+            "x": 243,
+            "nsRecordedTimeStamp": 21192173447375,
+            "y": 471,
+            "id": 2502,
+            "modifiers": 0
+        },
+        {
+            "button": 1,
+            "clickCount": 4,
+            "x": 294,
+            "nsRecordedTimeStamp": 21192489851625,
+            "y": 847,
+            "id": 2501,
+            "modifiers": 256
+        },
+        {
+            "button": 1,
+            "clickCount": 4,
+            "x": 294,
+            "nsRecordedTimeStamp": 21192585639375,
+            "y": 847,
+            "id": 2502,
+            "modifiers": 0
+        }
+    ],
+    "startTime": 21188889885541
+}

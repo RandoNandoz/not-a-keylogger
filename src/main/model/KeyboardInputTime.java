@@ -1,14 +1,19 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writeable;
+
+import java.util.Objects;
+
 /**
  * Class to represent unit of data that stores keyId from a NativeKeyEvent, and when it was
  * recorded in nanoseconds since start.
  *
  * @implNote This class has a natural ordering that is inconsistent with equals.
  */
-public class KeyboardInputTime extends InputTime {
-    private final KeyPress keyPress;
-    private final int keyId;
+public class KeyboardInputTime extends InputTime implements Writeable {
+    private KeyPress keyPress;
+    private int keyId;
 
     // EFFECTS: instantiates a new KeyBoardInputTime object with given Key ID and time since start of recording
     public KeyboardInputTime(int keyId, KeyPress keyPress, long nsSinceStart) {
@@ -40,5 +45,26 @@ public class KeyboardInputTime extends InputTime {
         KeyboardInputTime that = (KeyboardInputTime) o;
         return (nsRecordedTimeStamp == that.nsRecordedTimeStamp) &&  (keyId == that.keyId)
                 && (keyPress == that.keyPress);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(keyPress, keyId, nsRecordedTimeStamp);
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("keyPress", keyPress);
+        json.put("keyId", keyId);
+        json.put("nsRecordedTimeStamp", nsRecordedTimeStamp);
+        return json;
+    }
+
+    public static KeyboardInputTime fromJson(JSONObject jsonObject) {
+        var keyPress = KeyPress.valueOf(jsonObject.getString("keyPress"));
+        var keyId = jsonObject.getInt("keyId");
+        var nsRecordedTimeStamp = jsonObject.getLong("nsRecordedTimeStamp");
+        return new KeyboardInputTime(keyId, keyPress, nsRecordedTimeStamp);
     }
 }

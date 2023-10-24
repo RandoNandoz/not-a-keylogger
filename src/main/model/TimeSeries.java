@@ -1,10 +1,15 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writeable;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-public class TimeSeries<T extends InputTime> {
+public class TimeSeries<T extends InputTime> implements Writeable {
     private final ArrayList<T> inputs;
     private final long startTime;
 
@@ -12,6 +17,11 @@ public class TimeSeries<T extends InputTime> {
     public TimeSeries() {
         startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
+    }
+
+    public TimeSeries(ArrayList<T> inputs, long startTime) {
+        this.inputs = inputs;
+        this.startTime = startTime;
     }
 
     // REQUIRES: inputTime.getNsSinceStart() >= 0,
@@ -74,5 +84,34 @@ public class TimeSeries<T extends InputTime> {
 
     public long getStartTime() {
         return startTime;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject objectAsJson = new JSONObject();
+        JSONArray inputsAsJson = new JSONArray();
+        for (T t : this.inputs) {
+            inputsAsJson.put(t.toJson());
+        }
+        objectAsJson.put("inputs", inputsAsJson);
+        objectAsJson.put("startTime", startTime);
+        return objectAsJson;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+        TimeSeries<?> that = (TimeSeries<?>) object;
+        return startTime == that.startTime && inputs.equals(that.inputs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(inputs, startTime);
     }
 }

@@ -4,6 +4,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Objects;
 import java.util.TreeSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -105,5 +106,17 @@ class KeyboardInputTimeTest {
         );
 
         assertNotEquals(keyboardInputTime5, keyboardInputTime6);
+    }
+
+    @Test
+    void testHashCode() {
+        KeyPress kp = KeyPress.DOWN;
+        int keyId = 20;
+        long nsRecordedTs = 300;
+        int expectedHash = Objects.hash(kp, keyId, nsRecordedTs);
+
+        var keyIn = new KeyboardInputTime(keyId, kp, nsRecordedTs);
+
+        assertEquals(expectedHash, keyIn.hashCode());
     }
 }

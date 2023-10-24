@@ -1,0 +1,23 @@
+{
+    "inputs": [
+        {
+            "button": 12,
+            "clickCount": 11,
+            "x": 9,
+            "nsRecordedTimeStamp": 283,
+            "y": 10,
+            "id": 7,
+            "modifiers": 8
+        },
+        {
+            "button": 6,
+            "clickCount": 5,
+            "x": 3,
+            "nsRecordedTimeStamp": 3000,
+            "y": 4,
+            "id": 1,
+            "modifiers": 2
+        }
+    ],
+    "startTime": 21181196901875
+}

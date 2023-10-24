@@ -1,6 +1,9 @@
 package model;
 
-public abstract class InputTime implements Comparable<InputTime> {
+import org.json.JSONObject;
+import persistence.Writeable;
+
+public abstract class InputTime implements Comparable<InputTime>, Writeable {
     protected long nsRecordedTimeStamp;
 
     // REQUIRES:  startTime < nsRecordedTimeStamp, that is, the recording must have started
@@ -24,4 +27,6 @@ public abstract class InputTime implements Comparable<InputTime> {
     public int compareTo(InputTime o) {
         return Long.compare(nsRecordedTimeStamp, o.getNsRecordedTimeStamp());
     }
+
+    public abstract JSONObject toJson();
 }

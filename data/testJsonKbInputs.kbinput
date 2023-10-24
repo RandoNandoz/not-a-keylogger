@@ -1,0 +1,10 @@
+{
+  "inputs": [
+    {
+      "keyPress": "UP",
+      "keyId": 1,
+      "nsRecordedTimeStamp": 5
+    }
+  ],
+  "startTime": 3
+}

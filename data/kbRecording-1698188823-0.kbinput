@@ -1,0 +1,240 @@
+{
+    "inputs": [
+        {
+            "nsRecordedTimeStamp": 21190114363333,
+            "keyId": 30,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190131836833,
+            "keyId": 31,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190178804666,
+            "keyId": 32,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190244324333,
+            "keyId": 33,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190258096375,
+            "keyId": 30,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190322146958,
+            "keyId": 31,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190338121500,
+            "keyId": 32,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190387023083,
+            "keyId": 33,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190419870708,
+            "keyId": 36,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190420086833,
+            "keyId": 37,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190420427541,
+            "keyId": 38,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190435637666,
+            "keyId": 35,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190435814916,
+            "keyId": 38,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190498542041,
+            "keyId": 37,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190514415041,
+            "keyId": 36,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190578639000,
+            "keyId": 35,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190645863916,
+            "keyId": 30,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190646415291,
+            "keyId": 37,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190646841916,
+            "keyId": 38,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190647052083,
+            "keyId": 31,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190661729708,
+            "keyId": 32,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190698781833,
+            "keyId": 36,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190713051416,
+            "keyId": 38,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190713204666,
+            "keyId": 30,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190713208625,
+            "keyId": 37,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190756094708,
+            "keyId": 32,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190756112125,
+            "keyId": 33,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190756601083,
+            "keyId": 36,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190756738125,
+            "keyId": 31,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190788555750,
+            "keyId": 33,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190788578208,
+            "keyId": 38,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190850742250,
+            "keyId": 37,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190882634333,
+            "keyId": 36,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21190898488416,
+            "keyId": 38,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190914463416,
+            "keyId": 37,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21190981294291,
+            "keyId": 36,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21191042581125,
+            "keyId": 37,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21191108816750,
+            "keyId": 37,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21191170568708,
+            "keyId": 44,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21191186726875,
+            "keyId": 46,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21191203660500,
+            "keyId": 45,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21191250597958,
+            "keyId": 47,
+            "keyPress": "UP"
+        },
+        {
+            "nsRecordedTimeStamp": 21191282980250,
+            "keyId": 45,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21191283021583,
+            "keyId": 44,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21191328876083,
+            "keyId": 46,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21191346748916,
+            "keyId": 47,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 21192952703500,
+            "keyId": 28,
+            "keyPress": "UP"
+        }
+    ],
+    "startTime": 21188889880416
+}

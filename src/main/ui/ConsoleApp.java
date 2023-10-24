@@ -6,8 +6,13 @@ import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
 import model.TimeSeries;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 import ui.tools.CaptureTool;
 
+import java.io.IOException;
+import java.nio.file.NoSuchFileException;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -40,6 +45,7 @@ public class ConsoleApp {
 
     // EFFECTS: starts the app, terminates when q is selected.
     private void runApp() {
+        // inspired by TellerApp
         String cmd;
         boolean keepGoing = true;
 
@@ -72,7 +78,94 @@ public class ConsoleApp {
             case "e":
                 editMouseOrKeyboard();
                 break;
+            case "s":
+                saveAllInputs();
+                break;
+            case "l-k":
+                loadKeyInput();
+            case "l-m":
+                loadMouseInput();
+                break;
         }
+    }
+
+    // EFFECTS: save all inputs into files, numbered, and with unix-ts
+    private void saveAllInputs() {
+        saveKeyboardInputs();
+        saveMouseInputs();
+    }
+
+    private void saveKeyboardInputs() {
+        long unixTimestamp = Instant.now().getEpochSecond();
+        for (int i = 0; i < this.keyboardCaptures.size(); i++) {
+            JsonWriter<TimeSeries<KeyboardInputTime>> kbWriter;
+            kbWriter = new JsonWriter<>(String.format("./data/kbRecording-%d-%d.kbinput", unixTimestamp, i));
+            try {
+                kbWriter.open();
+            } catch (IOException e) {
+                System.out.println("Unable to write to ./data folder, do you have permissions to write to that folder?");
+                e.printStackTrace();
+            }
+            kbWriter.write(this.keyboardCaptures.get(i));
+            kbWriter.close();
+        }
+    }
+
+    private void saveMouseInputs() {
+        long unixTimestamp = Instant.now().getEpochSecond();
+        for (int i = 0; i < this.mouseCaptures.size(); i++) {
+            JsonWriter<TimeSeries<MouseInputTime>> mouseWriter;
+            mouseWriter = new JsonWriter<>(String.format("./data/mouseRecording-%d-%d.minput", unixTimestamp, i));
+            try {
+                mouseWriter.open();
+            } catch (IOException e) {
+                System.out.println("Unable to write to ./data folder, do you have permissions to write to that folder?");
+                e.printStackTrace();
+            }
+            mouseWriter.write(this.mouseCaptures.get(i));
+            mouseWriter.close();
+        }
+    }
+
+    // EFFECTS: adds a mouse input json schema to list, increments capture position
+    private void loadMouseInput() {
+        System.out.print("Please type the path of the .minput file (including name of file) to load: ");
+        String path = scanner.next();
+        JsonReader reader = new JsonReader(path);
+
+        TimeSeries<MouseInputTime> loaded = null;
+        currentIndexCapture++;
+
+        try {
+            loaded = (TimeSeries<MouseInputTime>) reader.readTimeSeries(MouseInputTime.class);
+        } catch (NoSuchFileException e) {
+            System.out.println("No such file exists!");
+        } catch (IOException e) {
+            System.out.println("Unable to read your .minput file, is it valid, and do you have access to read it?");
+            e.printStackTrace();
+        }
+
+        this.mouseCaptures.add(loaded);
+    }
+
+    // EFFECTS: adds a key input to list, increments capture position.
+    private void loadKeyInput() {
+        System.out.print("Please type the path of the .kinput file (including name of file) to load: ");
+        String path = scanner.next();
+        JsonReader reader = new JsonReader(path);
+
+        TimeSeries<KeyboardInputTime> loaded = null;
+        currentIndexCapture++;
+
+        try {
+            loaded = (TimeSeries<KeyboardInputTime>) reader.readTimeSeries(KeyboardInputTime.class);
+        } catch (IOException e) {
+            System.out.println("Unable to read your .minput file, is it valid, and do you have access to read it?");
+            e.printStackTrace();
+        }
+
+        this.keyboardCaptures.add(loaded);
+
     }
 
     // EFFECTS: edits user's desired mouse/keyboard input
@@ -158,10 +251,14 @@ public class ConsoleApp {
 
     // EFFECTS: shows options avail. to user.
     private void showOptions() {
+        // inspired by TellerApp
         System.out.println("r - record");
         System.out.println("l - list out recorded inputs");
         System.out.println("e - edit recorded inputs by recording number, and input number.");
         System.out.println("q - quit");
+        System.out.println("s - save all inputs");
+        System.out.println("l-k - load keyboard inputs");
+        System.out.println("l-m - load mouse inputs");
     }
 
     // MODIFIES: this

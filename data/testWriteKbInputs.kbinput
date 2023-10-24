@@ -1,0 +1,15 @@
+{
+    "inputs": [
+        {
+            "nsRecordedTimeStamp": 23,
+            "keyId": 1,
+            "keyPress": "DOWN"
+        },
+        {
+            "nsRecordedTimeStamp": 30,
+            "keyId": 1,
+            "keyPress": "DOWN"
+        }
+    ],
+    "startTime": 21181202667333
+}

@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -262,5 +260,50 @@ class TimeSeriesTest {
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_R, KeyPress.UP, 2), series.getInputs().get(0));
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_U, KeyPress.UP, 3), series.getInputs().get(1));
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_T, KeyPress.UP, 5), series.getInputs().get(2));
+    }
+
+    @Test
+    void testEquals() throws NoSuchFieldException, IllegalAccessException {
+        // same object
+        TimeSeries<KeyboardInputTime> inputs = new TimeSeries<>();
+        assertEquals(inputs, inputs);
+
+        // same values, different refs
+        TimeSeries<KeyboardInputTime> definitelyDifferent = new TimeSeries<>();
+        // we have to mutate private field to be the same
+        // bad practice but wtv
+        // https://www.geeksforgeeks.org/how-to-access-private-field-and-method-using-reflection-in-java/
+        Field startTime = TimeSeries.class.getDeclaredField("startTime");
+        startTime.setAccessible(true);
+        startTime.setLong(definitelyDifferent, inputs.getStartTime());
+
+        assertEquals(inputs, definitelyDifferent);
+
+        // compare with null
+        assertFalse(inputs.equals(null));
+
+        // different classes
+        TreeSet<Integer> i = new TreeSet<>();
+//        assertNotEquals(i, inputs);
+        assertFalse(inputs.equals(i));
+
+        // different start time, same inputs
+        TimeSeries<KeyboardInputTime> inputs1 = new TimeSeries<>();
+        assertFalse(inputs1.equals(inputs));
+
+        // same start time, diff inputs
+        inputs.addKey(new KeyboardInputTime(10, KeyPress.DOWN, 3000));
+
+        assertNotEquals(inputs, definitelyDifferent);
+    }
+
+    @Test
+    void testHashCode() {
+        int expectedHash = Objects.hash(
+                this.series.getInputs(),
+                this.series.getStartTime()
+        );
+
+        assertEquals(expectedHash, this.series.hashCode());
     }
 }
