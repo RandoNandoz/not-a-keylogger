@@ -86,6 +86,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         return startTime;
     }
 
+    // EFFECTS: returns JSON manifestation of object.
     @Override
     public JSONObject toJson() {
         JSONObject objectAsJson = new JSONObject();
@@ -98,6 +99,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         return objectAsJson;
     }
 
+    // EFFECTS: performs deep comparison of all values in class.
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -110,6 +112,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         return startTime == that.startTime && inputs.equals(that.inputs);
     }
 
+    // EFFECTS: provide hashcode on fields
     @Override
     public int hashCode() {
         return Objects.hash(inputs, startTime);

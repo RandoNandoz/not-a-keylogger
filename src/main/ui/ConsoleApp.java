@@ -95,6 +95,7 @@ public class ConsoleApp {
         saveMouseInputs();
     }
 
+    // EFFECTS: save all kb inputs into files, with unix ts
     private void saveKeyboardInputs() {
         long unixTimestamp = Instant.now().getEpochSecond();
         for (int i = 0; i < this.keyboardCaptures.size(); i++) {
@@ -103,7 +104,7 @@ public class ConsoleApp {
             try {
                 kbWriter.open();
             } catch (IOException e) {
-                System.out.println("Unable to write to ./data folder, do you have permissions to write to that folder?");
+                System.out.println("Can't to write to ./data folder, do you have permissions to write to that folder?");
                 e.printStackTrace();
             }
             kbWriter.write(this.keyboardCaptures.get(i));
@@ -111,6 +112,7 @@ public class ConsoleApp {
         }
     }
 
+    // EFFECTS: save all mouse inputs into files, with unix ts.
     private void saveMouseInputs() {
         long unixTimestamp = Instant.now().getEpochSecond();
         for (int i = 0; i < this.mouseCaptures.size(); i++) {
@@ -119,7 +121,7 @@ public class ConsoleApp {
             try {
                 mouseWriter.open();
             } catch (IOException e) {
-                System.out.println("Unable to write to ./data folder, do you have permissions to write to that folder?");
+                System.out.println("Can't to write to ./data folder, do you have permissions to write to that folder?");
                 e.printStackTrace();
             }
             mouseWriter.write(this.mouseCaptures.get(i));
@@ -127,6 +129,7 @@ public class ConsoleApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: adds a mouse input json schema to list, increments capture position
     private void loadMouseInput() {
         System.out.print("Please type the path of the .minput file (including name of file) to load: ");
@@ -148,6 +151,7 @@ public class ConsoleApp {
         this.mouseCaptures.add(loaded);
     }
 
+    // MODIFIES: this
     // EFFECTS: adds a key input to list, increments capture position.
     private void loadKeyInput() {
         System.out.print("Please type the path of the .kinput file (including name of file) to load: ");
@@ -159,6 +163,9 @@ public class ConsoleApp {
 
         try {
             loaded = (TimeSeries<KeyboardInputTime>) reader.readTimeSeries(KeyboardInputTime.class);
+        } catch (NoSuchFileException e) {
+            System.out.println("Illegal path");
+            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Unable to read your .minput file, is it valid, and do you have access to read it?");
             e.printStackTrace();
@@ -168,6 +175,7 @@ public class ConsoleApp {
 
     }
 
+    // MODIFIES: this
     // EFFECTS: edits user's desired mouse/keyboard input
     private void editMouseOrKeyboard() {
         System.out.println("Input type of capture: ");
@@ -277,6 +285,8 @@ public class ConsoleApp {
         System.out.println("Capture made.");
     }
 
+    // MODIFIES: this
+    // EFFECTS: sets state of app to rceord
     private void startCapture() {
         AppState.getInstance().setRecording(true);
     }

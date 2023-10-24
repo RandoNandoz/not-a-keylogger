@@ -28,5 +28,6 @@ public abstract class InputTime implements Comparable<InputTime>, Writeable {
         return Long.compare(nsRecordedTimeStamp, o.getNsRecordedTimeStamp());
     }
 
+    // EFFECTS: returns jsonObject representation of class
     public abstract JSONObject toJson();
 }
