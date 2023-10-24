@@ -30,15 +30,14 @@ For instance:
 <details open>
 <summary>User stories</summary>
 
-- I want to record my actions (mouse and keyboard events).
-- I want to be able to play back these mouse and keyboard events.
-- I want to be able to see what keyboard recordings are available to me.
-- I want to preview the actions in an "intuitive way" before I play them.
+- I want to record my actions (mouse and keyboard events). ✅
+- I want to be able to play back these mouse and keyboard events. 
+- I want to be able to see what keyboard recordings are available to me. ✅
+- I want to preview the actions in an "intuitive way" before I play them. ✅
 - I want an easy to remember shortcut in order to emergency stop an instruction.
-- I want to be able to edit the instructions I have recorded.
-- I want to share my recipes with other people.
-- I want to assign keyboard shortcuts to my recipes.
-- I want to be able to view my recorded actions in a list style, scrollable view.
+- I want to be able to edit the instructions I have recorded. ✅
+- I want to be able to save my recordings to a file.
+- I want to be able to view my recorded actions in a list style, scrollable view. ✅
 </details>
 
 
