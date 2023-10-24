@@ -8,16 +8,16 @@ import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
 import model.TimeSeries;
+import ui.AppState;
 
 public class CaptureTool implements NativeKeyListener, NativeMouseInputListener {
-    private final TimeSeries<KeyboardInputTime> keyboardCaptures;
-    private final TimeSeries<MouseInputTime> mouseCaptures;
+    private TimeSeries<KeyboardInputTime> keyboardCaptures;
+    private TimeSeries<MouseInputTime> mouseCaptures;
 
-
-    // EFFECTS: creates a new CaptureTool that captures user inputs, with time series to be modified.
-    public CaptureTool(TimeSeries<KeyboardInputTime> keyboardCaptures, TimeSeries<MouseInputTime> mouseCaptures) {
-        this.keyboardCaptures = keyboardCaptures;
-        this.mouseCaptures = mouseCaptures;
+    // EFFECTS: creates new capture tool with null captures, one must set the arrays to capture for.
+    public CaptureTool() {
+        this.keyboardCaptures = null;
+        this.mouseCaptures = null;
     }
 
     // MODIFIES: this
@@ -25,11 +25,13 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // and the time it was pressed to the keyboard captures list
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
-        this.keyboardCaptures.addKey(new KeyboardInputTime(
-                nativeEvent.getKeyCode(),
-                KeyPress.UP,
-                System.nanoTime()
-        ));
+        if (AppState.getInstance().isRecording()) {
+            this.keyboardCaptures.addKey(new KeyboardInputTime(
+                    nativeEvent.getKeyCode(),
+                    KeyPress.UP,
+                    System.nanoTime()
+            ));
+        }
     }
 
     // MODIFIES: this
@@ -37,45 +39,61 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // and the time it was pressed to the keyboard captures list
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeEvent) {
-        this.keyboardCaptures.addKey(new KeyboardInputTime(
-                nativeEvent.getKeyCode(),
-                KeyPress.DOWN,
-                System.nanoTime()
-        ));
+        if (AppState.getInstance().isRecording()) {
+            this.keyboardCaptures.addKey(new KeyboardInputTime(
+                    nativeEvent.getKeyCode(),
+                    KeyPress.DOWN,
+                    System.nanoTime()
+            ));
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: adds mouse event when mouse pressed, and the time it was pressed.
     @Override
     public void nativeMousePressed(NativeMouseEvent e) {
-        this.mouseCaptures.addKey(
-                new MouseInputTime(
-                        e,
-                        System.nanoTime()
-                )
-        );
+        if (AppState.getInstance().isRecording()) {
+            this.mouseCaptures.addKey(
+                    new MouseInputTime(
+                            e,
+                            System.nanoTime()
+                    )
+            );
+        }
     }
 
     // EFFECTS: adds mouse event when mouse released and its time it pressed.
     @Override
     public void nativeMouseReleased(NativeMouseEvent e) {
-        this.mouseCaptures.addKey(
-                new MouseInputTime(
-                        e,
-                        System.nanoTime()
-                )
-        );
+        if (AppState.getInstance().isRecording()) {
+            this.mouseCaptures.addKey(
+                    new MouseInputTime(
+                            e,
+                            System.nanoTime()
+                    )
+            );
+        }
     }
 
     // MODIFIES: this
     // EFFECTS: adds mouse event when mouse moved and time pressed.
     @Override
     public void nativeMouseMoved(NativeMouseEvent e) {
-        this.mouseCaptures.addKey(
-                new MouseInputTime(
-                        e,
-                        System.nanoTime()
-                )
-        );
+        if (AppState.getInstance().isRecording()) {
+            this.mouseCaptures.addKey(
+                    new MouseInputTime(
+                            e,
+                            System.nanoTime()
+                    )
+            );
+        }
+    }
+
+    public void setKeyboardCaptures(TimeSeries<KeyboardInputTime> keyboardCaptures) {
+        this.keyboardCaptures = keyboardCaptures;
+    }
+
+    public void setMouseCaptures(TimeSeries<MouseInputTime> mouseCaptures) {
+        this.mouseCaptures = mouseCaptures;
     }
 }

@@ -15,11 +15,22 @@ public class ConsoleApp {
     private final ArrayList<TimeSeries<KeyboardInputTime>> keyboardCaptures;
     private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
     private final Scanner scanner;
+    private final CaptureTool captureTool;
     int currentIndexCapture;
 
 
     // EFFECTS: starts a new console version of the kb capture tool, with no captures,
+    // Registers native hook, and prompts user for input as well
     public ConsoleApp() {
+        try {
+            GlobalScreen.registerNativeHook();
+        } catch (NativeHookException exception) {
+            System.err.println("Error registering native hook, make sure correct permissions/libraries are installed");
+            System.exit(1);
+        }
+        captureTool = new CaptureTool();
+        GlobalScreen.addNativeKeyListener(captureTool);
+        GlobalScreen.addNativeMouseListener(captureTool);
         currentIndexCapture = 0;
         scanner = new Scanner(System.in);
         keyboardCaptures = new ArrayList<>();
@@ -138,7 +149,7 @@ public class ConsoleApp {
             TimeSeries<MouseInputTime> mouseInputs = mouseCaptures.get(i);
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
-                System.out.printf("Input number %d: <X: %d, Y: %d, Event type: %s>\n",
+                System.out.printf("Input number %d: <X: %d, Y: %d, Event detailsz: %s>\n",
                         j, eventTime.getEvent().getX(), eventTime.getEvent().getY(), eventTime.getEvent().paramString()
                 );
             }
@@ -154,40 +165,28 @@ public class ConsoleApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: captures user mouse and kb inputs, registers native hook, and prompts user (if needed, by os) for
-    // permission
+    // EFFECTS: captures user mouse and kb inputs
     private void capture(int index) {
         var keyboardCapture = keyboardCaptures.get(index);
         var mouseCapture = mouseCaptures.get(index);
         System.out.println("Beginning keyboard/mouse capture... Press enter to stop.");
-        try {
-            GlobalScreen.registerNativeHook();
-        } catch (NativeHookException exception) {
-            System.err.println("Error registering native hook, make sure correct permissions/libraries are installed");
-            System.exit(1);
-        }
-
-        CaptureTool tool = new CaptureTool(
-                keyboardCapture,
-                mouseCapture
-        );
-
-        GlobalScreen.addNativeKeyListener(tool);
-        GlobalScreen.addNativeMouseListener(tool);
-
+        this.captureTool.setKeyboardCaptures(keyboardCapture);
+        this.captureTool.setMouseCaptures(mouseCapture);
+        startCapture();
         scanner.nextLine();
-        stopCapture(tool);
+        // remove last elem of kb captures as that's an enter to stop input
+        keyboardCapture.deleteIndex(this.keyboardCaptures.size() - 1);
+        stopCapture();
         System.out.println("Capture made.");
     }
 
+    private void startCapture() {
+        AppState.getInstance().setRecording(true);
+    }
+
     // MODIFIES: this
-    // EFFECTS: de-regs nativehook with given capturetool, stops recording user inputs, and removes last input (which
-    // is instruction to stop recording)
-    private void stopCapture(CaptureTool tool) {
-        try {
-            GlobalScreen.unregisterNativeHook();
-        } catch (NativeHookException e) {
-            System.out.println("Error in de-registering the native hook, this shouldn't happen.");
-        }
+    // EFFECTS: sets state of app to not record
+    private void stopCapture() {
+        AppState.getInstance().setRecording(false);
     }
 }

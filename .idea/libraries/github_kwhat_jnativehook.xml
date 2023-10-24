@@ -7,8 +7,6 @@
     <JAVADOC>
       <root url="jar://$PROJECT_DIR$/lib/jnativehook-2.2.2-javadoc.jar!/" />
     </JAVADOC>
-    <SOURCES>
-      <root url="jar://$PROJECT_DIR$/lib/jnativehook-2.2.2-sources.jar!/" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>
