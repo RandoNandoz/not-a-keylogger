@@ -28,11 +28,11 @@ public class MouseInputTime extends InputTime {
         }
         MouseInputTime that = (MouseInputTime) o;
         return this.event.getID() == that.event.getID()
-                & this.event.getModifiers() == that.event.getModifiers()
-                & this.event.getX() == that.event.getX()
-                & this.event.getY() == that.event.getY()
-                & this.event.getClickCount() == that.event.getClickCount()
-                & this.event.getButton() == that.event.getButton()
-                & this.nsRecordedTimeStamp == that.nsRecordedTimeStamp;
+                && this.event.getModifiers() == that.event.getModifiers()
+                && this.event.getX() == that.event.getX()
+                && this.event.getY() == that.event.getY()
+                && this.event.getClickCount() == that.event.getClickCount()
+                && this.event.getButton() == that.event.getButton()
+                && this.nsRecordedTimeStamp == that.nsRecordedTimeStamp;
     }
 }

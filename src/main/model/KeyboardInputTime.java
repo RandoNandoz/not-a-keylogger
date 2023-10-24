@@ -34,10 +34,11 @@ public class KeyboardInputTime extends InputTime {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
         KeyboardInputTime that = (KeyboardInputTime) o;
-        return nsRecordedTimeStamp == that.nsRecordedTimeStamp & keyId == that.keyId & keyPress == that.keyPress;
+        return (nsRecordedTimeStamp == that.nsRecordedTimeStamp) &&  (keyId == that.keyId)
+                && (keyPress == that.keyPress);
     }
 }

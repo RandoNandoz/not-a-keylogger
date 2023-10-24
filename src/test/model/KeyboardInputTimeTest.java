@@ -74,5 +74,36 @@ class KeyboardInputTimeTest {
         // different reference, same object
         KeyboardInputTime sameValue = new KeyboardInputTime(NativeKeyEvent.VC_ESCAPE, KeyPress.UP, 30);
         assertEquals(this.kbInput1, sameValue);
+
+        // comparison with null
+        assertNotEquals(kbInput1, null);
+
+        // consider timestamp != timestamp, keyId != keyId, and keyPress != keyPress
+        var keyboardInputTime1 = new KeyboardInputTime(
+                1, KeyPress.UP, 1
+        );
+        var keyboardInputTime2 = new KeyboardInputTime(
+                2, KeyPress.UP, 1
+        );
+
+        assertNotEquals(keyboardInputTime1, keyboardInputTime2);
+
+        var keyboardInputTime3 = new KeyboardInputTime(
+                0, KeyPress.UP, 1
+        );
+        var keyboardInputTime4 = new KeyboardInputTime(
+                0, KeyPress.DOWN, 1
+        );
+
+        assertNotEquals(keyboardInputTime3, keyboardInputTime4);
+
+        var keyboardInputTime5 = new KeyboardInputTime(
+                0, KeyPress.DOWN, 2
+        );
+        var keyboardInputTime6 = new KeyboardInputTime(
+                0, KeyPress.DOWN, 1
+        );
+
+        assertNotEquals(keyboardInputTime5, keyboardInputTime6);
     }
 }

@@ -50,5 +50,75 @@ class MouseInputTimeTest {
                 300
         );
         assertEquals(this.mouseInputTime, sameValue);
+
+
+        // id != id, x!=x, modifiers != modifiers, etc.
+        // sigh...
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    1, 2, 2, 2, 2, 2
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 1, 2, 2, 2, 2
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 1, 2, 2, 2
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 1, 2, 2
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 1, 2
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 1
+            ), 2);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+        {
+            var m1 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 1);
+            var m2 = new MouseInputTime(new NativeMouseEvent(
+                    2, 2, 2, 2, 2, 2
+            ), 2);
+            assertNotEquals(m1, m2);
+        }
+
+        // compare with null
+        assertNotEquals(mouseInputTime, null);
     }
 }
