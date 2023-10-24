@@ -36,7 +36,9 @@ For instance:
 - I want to preview the actions in an "intuitive way" before I play them. ✅
 - I want an easy to remember shortcut in order to emergency stop an instruction.
 - I want to be able to edit the instructions I have recorded. ✅
-- I want to be able to save my recordings to a file.
+- I want to be able to save all my recordings to a file.
+- Alternatively, I want to be able to save individual recordings to a file.
+- I want to be able to add an individual, or group of recordings from a file when I start the app, if I choose to do so.
 - I want to be able to view my recorded actions in a list style, scrollable view. ✅
 </details>
 
