@@ -68,9 +68,10 @@ public class JsonReader {
 //        assert (KeyboardInputTime.class == c || MouseInputTime.class == c);
         if (KeyboardInputTime.class == c) {
             return this.readKeyboardTimeSeries();
-        } else {
+        } else if (MouseInputTime.class == c) {
             return this.readMouseTimeSeries();
         }
+        throw new IllegalArgumentException("Must provide known subclass of InputTime!");
     }
 
     // EFFECTS: reads source file as string and returns it
