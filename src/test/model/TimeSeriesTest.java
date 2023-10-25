@@ -297,6 +297,11 @@ class TimeSeriesTest {
         inputs.addKey(new KeyboardInputTime(10, KeyPress.DOWN, 3000));
 
         assertNotEquals(inputs, definitelyDifferent);
+
+        // compare with null
+
+        assertFalse(series.equals(null));
+        assertFalse(series.equals(i));
     }
 
     @Test
