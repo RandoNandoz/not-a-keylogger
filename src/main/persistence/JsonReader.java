@@ -64,8 +64,8 @@ public class JsonReader {
     // EFFECTS: returns timeseries at JSON
     // TODO: make java shut up about unchecked casts?
     public TimeSeries<? extends InputTime> readTimeSeries(Class<? extends InputTime> c) throws IOException {
-        assert (InputTime.class.isAssignableFrom(c));
-        assert (KeyboardInputTime.class == c || MouseInputTime.class == c);
+//        assert (InputTime.class.isAssignableFrom(c));
+//        assert (KeyboardInputTime.class == c || MouseInputTime.class == c);
         if (KeyboardInputTime.class == c) {
             return this.readKeyboardTimeSeries();
         } else {

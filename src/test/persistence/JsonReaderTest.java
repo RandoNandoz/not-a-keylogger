@@ -2,6 +2,7 @@ package persistence;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import model.*;
+import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,14 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class FakeClass extends InputTime {
+
+    @Override
+    public JSONObject toJson() {
+        return null;
+    }
+}
 
 class JsonReaderTest {
     JsonReader keyboardInputTimeReader;
@@ -55,7 +64,7 @@ class JsonReaderTest {
     @Test
     void testConstructIllegalReader() { // this is a dumb test
         assertThrows(IllegalArgumentException.class, () -> {
-//            mouseInputTimeReader.readTimeSeries(FakeClass.class);
+            mouseInputTimeReader.readTimeSeries(FakeClass.class);
         });
     }
 }
