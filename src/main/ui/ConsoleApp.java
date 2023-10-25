@@ -70,11 +70,7 @@ public class ConsoleApp {
     private void processCommand(String cmd) {
         switch (cmd) {
             case "r":
-                this.keyboardCaptures.add(new TimeSeries<>());
-                this.mouseCaptures.add(new TimeSeries<>());
-                this.capture(this.currentKbIndexCapture, this.currentMouseIndexCapture);
-                this.currentKbIndexCapture++;
-                this.currentMouseIndexCapture++;
+                startCaptureMovePointers();
                 break;
             case "l":
                 this.showRecordings();
@@ -92,6 +88,14 @@ public class ConsoleApp {
                 this.loadMouseInput();
                 break;
         }
+    }
+
+    private void startCaptureMovePointers() {
+        this.keyboardCaptures.add(new TimeSeries<>());
+        this.mouseCaptures.add(new TimeSeries<>());
+        this.capture(this.currentKbIndexCapture, this.currentMouseIndexCapture);
+        this.currentKbIndexCapture++;
+        this.currentMouseIndexCapture++;
     }
 
     // EFFECTS: save all inputs into files, numbered, and with unix-ts
