@@ -70,7 +70,7 @@ public class ConsoleApp {
     private void processCommand(String cmd) {
         switch (cmd) {
             case "r":
-                startCaptureMovePointers();
+                this.startCaptureMovePointers();
                 break;
             case "l":
                 this.showRecordings();
