@@ -15,7 +15,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
 
     // EFFECTS: creates a new keyboard input times series capture with an empty list of captures
     public TimeSeries() {
-        startTime = System.nanoTime();
+        this.startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
     }
 
@@ -31,9 +31,9 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     public void addKey(T inputTime) {
         if (this.inputs.isEmpty()) {
             this.inputs.add(inputTime);
-        } else if (this.inputs.get(this.inputs.size() - 1).compareTo(inputTime) < 0) {
+        } else if (0 > this.inputs.get(this.inputs.size() - 1).compareTo(inputTime)) {
             this.inputs.add(inputTime);
-        } else if (inputTime.compareTo(this.inputs.get(0)) < 0) {
+        } else if (0 > inputTime.compareTo(this.inputs.get(0))) {
             this.inputs.add(0, inputTime);
         } else {
             for (int i = 0; true; i++) { // horrible code coverage hack, only because we're graded on codecov.
@@ -60,7 +60,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     //          returns the new index of the key
     //          throws IllegalArgumentException if index < 0 or larger or equal to than this.getInputs().size()
     public int editKey(int index, T inputTime) {
-        if (index < 0 || index >= this.getInputs().size()) {
+        if (0 > index || index >= this.getInputs().size()) {
             throw new IllegalArgumentException("Invalid index to edit.");
         }
 //        KeyboardInputTime inputToEdit = this.inputs.get(index);
@@ -83,7 +83,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     }
 
     public long getStartTime() {
-        return startTime;
+        return this.startTime;
     }
 
     // EFFECTS: returns JSON manifestation of object.
@@ -95,7 +95,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
             inputsAsJson.put(t.toJson());
         }
         objectAsJson.put("inputs", inputsAsJson);
-        objectAsJson.put("startTime", startTime);
+        objectAsJson.put("startTime", this.startTime);
         return objectAsJson;
     }
 
@@ -105,16 +105,16 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         if (this == object) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
+        if (null == object || this.getClass() != object.getClass()) {
             return false;
         }
         TimeSeries<?> that = (TimeSeries<?>) object;
-        return startTime == that.startTime && inputs.equals(that.inputs);
+        return this.startTime == that.startTime && this.inputs.equals(that.inputs);
     }
 
     // EFFECTS: provide hashcode on fields
     @Override
     public int hashCode() {
-        return Objects.hash(inputs, startTime);
+        return Objects.hash(this.inputs, this.startTime);
     }
 }

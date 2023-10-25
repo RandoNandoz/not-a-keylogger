@@ -11,7 +11,7 @@ public abstract class InputTime implements Comparable<InputTime>, Writeable {
     // EFFECTS: computes the difference between the start of the recording, and the timestamp recorded.
     // this is useful as we want to calculate when to send.
     public long getDeltaTime(long startTime) {
-        return nsRecordedTimeStamp - startTime;
+        return this.nsRecordedTimeStamp - startTime;
     }
 
 
@@ -25,7 +25,7 @@ public abstract class InputTime implements Comparable<InputTime>, Writeable {
     //          returns 1 if o's timestamp > this's timestamp.
     @Override
     public int compareTo(InputTime o) {
-        return Long.compare(nsRecordedTimeStamp, o.getNsRecordedTimeStamp());
+        return Long.compare(this.nsRecordedTimeStamp, o.nsRecordedTimeStamp);
     }
 
     // EFFECTS: returns jsonObject representation of class

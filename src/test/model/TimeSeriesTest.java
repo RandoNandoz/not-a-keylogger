@@ -61,7 +61,7 @@ class TimeSeriesTest {
 
     @Test
     void testAddOneKey() {
-        int spaceKey = NativeKeyEvent.VC_SPACE;
+        final int spaceKey = NativeKeyEvent.VC_SPACE;
 
         series.addKey(new KeyboardInputTime(spaceKey, KeyPress.UP, 30));
 
@@ -109,7 +109,7 @@ class TimeSeriesTest {
 
     @Test
     void testAddManyKeysOutOfOrder() {
-        KeyboardInputTime[] keys = new KeyboardInputTime[]{
+        KeyboardInputTime[] keys = {
                 new KeyboardInputTime(NativeKeyEvent.VC_X, KeyPress.UP, 34),
                 new KeyboardInputTime(NativeKeyEvent.VC_Q, KeyPress.UP, 348957),
                 new KeyboardInputTime(NativeKeyEvent.VC_W, KeyPress.UP, 12),
@@ -131,7 +131,7 @@ class TimeSeriesTest {
 
     @Test
     void testAddManyKeysRandomizedOrder() {
-        KeyboardInputTime[] keys = new KeyboardInputTime[]{
+        KeyboardInputTime[] keys = {
                 new KeyboardInputTime(NativeKeyEvent.VC_X, KeyPress.UP, rd.nextLong()),
                 new KeyboardInputTime(NativeKeyEvent.VC_Q, KeyPress.UP, rd.nextLong()),
                 new KeyboardInputTime(NativeKeyEvent.VC_W, KeyPress.UP, rd.nextLong()),
@@ -153,7 +153,7 @@ class TimeSeriesTest {
 
     @Test
     void testEditKeyOneKeyInOrder() {
-        KeyboardInputTime[] keys = new KeyboardInputTime[]{
+        KeyboardInputTime[] keys = {
                 new KeyboardInputTime(NativeKeyEvent.VC_ESCAPE, KeyPress.UP, 20),
                 new KeyboardInputTime(NativeKeyEvent.VC_ALT, KeyPress.UP, 30),
                 new KeyboardInputTime(NativeKeyEvent.VC_F3, KeyPress.UP, 40),
@@ -177,7 +177,7 @@ class TimeSeriesTest {
 
     @Test
     void testEditManyKeysInOrder() {
-        KeyboardInputTime[] keys = new KeyboardInputTime[]{
+        KeyboardInputTime[] keys = {
                 new KeyboardInputTime(NativeKeyEvent.VC_ESCAPE, KeyPress.UP, 20),
                 new KeyboardInputTime(NativeKeyEvent.VC_ALT, KeyPress.UP, 30),
                 new KeyboardInputTime(NativeKeyEvent.VC_F3, KeyPress.UP, 40),
@@ -246,7 +246,8 @@ class TimeSeriesTest {
         int oldSize = series.getInputs().size();
 
         series.deleteIndex(0);
-        assertEquals(--oldSize, series.getInputs().size());
+        --oldSize;
+        assertEquals(oldSize, series.getInputs().size());
 
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_R, KeyPress.UP, 2), series.getInputs().get(0));
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_U, KeyPress.UP, 3), series.getInputs().get(1));
@@ -255,7 +256,8 @@ class TimeSeriesTest {
 
         series.deleteIndex(2);
 
-        assertEquals(--oldSize, series.getInputs().size());
+        --oldSize;
+        assertEquals(oldSize, series.getInputs().size());
 
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_R, KeyPress.UP, 2), series.getInputs().get(0));
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_U, KeyPress.UP, 3), series.getInputs().get(1));
@@ -263,7 +265,7 @@ class TimeSeriesTest {
     }
 
     @Test
-    void testEquals() throws NoSuchFieldException, IllegalAccessException {
+    void testEquals() throws Exception {
         // same object
         TimeSeries<KeyboardInputTime> inputs = new TimeSeries<>();
         assertEquals(inputs, inputs);
@@ -280,16 +282,16 @@ class TimeSeriesTest {
         assertEquals(inputs, definitelyDifferent);
 
         // compare with null
-        assertFalse(inputs.equals(null));
+        assertNotEquals(null, inputs);
 
         // different classes
         TreeSet<Integer> i = new TreeSet<>();
 //        assertNotEquals(i, inputs);
-        assertFalse(inputs.equals(i));
+        assertNotEquals(inputs, i);
 
         // different start time, same inputs
         TimeSeries<KeyboardInputTime> inputs1 = new TimeSeries<>();
-        assertFalse(inputs1.equals(inputs));
+        assertNotEquals(inputs1, inputs);
 
         // same start time, diff inputs
         inputs.addKey(new KeyboardInputTime(10, KeyPress.DOWN, 3000));

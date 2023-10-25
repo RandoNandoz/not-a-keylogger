@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @implNote This class has a natural ordering that is inconsistent with equals.
  */
-public class KeyboardInputTime extends InputTime implements Writeable {
+public class KeyboardInputTime extends InputTime {
     private final KeyPress keyPress;
     private final int keyId;
 
@@ -24,12 +24,12 @@ public class KeyboardInputTime extends InputTime implements Writeable {
 
     // getters and setters
     public int getKeyId() {
-        return keyId;
+        return this.keyId;
     }
 
 
     public KeyPress getKeyPress() {
-        return keyPress;
+        return this.keyPress;
     }
 
 
@@ -39,27 +39,27 @@ public class KeyboardInputTime extends InputTime implements Writeable {
         if (this == o) {
             return true;
         }
-        if ((o == null) || (getClass() != o.getClass())) {
+        if ((null == o) || (getClass() != o.getClass())) {
             return false;
         }
         KeyboardInputTime that = (KeyboardInputTime) o;
-        return (nsRecordedTimeStamp == that.nsRecordedTimeStamp) &&  (keyId == that.keyId)
-                && (keyPress == that.keyPress);
+        return (this.nsRecordedTimeStamp == that.nsRecordedTimeStamp) &&  (this.keyId == that.keyId)
+                && (this.keyPress == that.keyPress);
     }
 
     // EFFECTS: returns hash code
     @Override
     public int hashCode() {
-        return Objects.hash(keyPress, keyId, nsRecordedTimeStamp);
+        return Objects.hash(this.keyPress, this.keyId, this.nsRecordedTimeStamp);
     }
 
     // EFFECTS: returns jsonObject representation of class
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
-        json.put("keyPress", keyPress);
-        json.put("keyId", keyId);
-        json.put("nsRecordedTimeStamp", nsRecordedTimeStamp);
+        json.put("keyPress", this.keyPress);
+        json.put("keyId", this.keyId);
+        json.put("nsRecordedTimeStamp", this.nsRecordedTimeStamp);
         return json;
     }
 

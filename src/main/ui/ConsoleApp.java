@@ -11,6 +11,7 @@ import persistence.JsonWriter;
 import ui.tools.CaptureTool;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.NoSuchFileException;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,7 +22,8 @@ public class ConsoleApp {
     private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
     private final Scanner scanner;
     private final CaptureTool captureTool;
-    int currentIndexCapture;
+    int currentMouseIndexCapture;
+    int currentKbIndexCapture;
 
 
     // EFFECTS: starts a new console version of the kb capture tool, with no captures,
@@ -33,14 +35,15 @@ public class ConsoleApp {
             System.err.println("Error registering native hook, make sure correct permissions/libraries are installed");
             System.exit(1);
         }
-        captureTool = new CaptureTool();
-        GlobalScreen.addNativeKeyListener(captureTool);
-        GlobalScreen.addNativeMouseListener(captureTool);
-        currentIndexCapture = 0;
-        scanner = new Scanner(System.in);
-        keyboardCaptures = new ArrayList<>();
-        mouseCaptures = new ArrayList<>();
-        runApp();
+        this.captureTool = new CaptureTool();
+        GlobalScreen.addNativeKeyListener(this.captureTool);
+        GlobalScreen.addNativeMouseListener(this.captureTool);
+        this.currentMouseIndexCapture = 0;
+        this.currentKbIndexCapture = 0;
+        this.scanner = new Scanner(System.in, StandardCharsets.UTF_8);
+        this.keyboardCaptures = new ArrayList<>();
+        this.mouseCaptures = new ArrayList<>();
+        this.runApp();
     }
 
     // EFFECTS: starts the app, terminates when q is selected.
@@ -50,13 +53,13 @@ public class ConsoleApp {
         boolean keepGoing = true;
 
         while (keepGoing) {
-            showOptions();
-            cmd = scanner.nextLine().toLowerCase();
+            this.showOptions();
+            cmd = this.scanner.nextLine().toLowerCase();
 
-            if (cmd.equals("q")) {
+            if ("q".equals(cmd)) {
                 keepGoing = false;
             } else {
-                processCommand(cmd);
+                this.processCommand(cmd);
             }
         }
     }
@@ -69,30 +72,32 @@ public class ConsoleApp {
             case "r":
                 this.keyboardCaptures.add(new TimeSeries<>());
                 this.mouseCaptures.add(new TimeSeries<>());
-                capture(currentIndexCapture);
-                currentIndexCapture++;
+                this.capture(this.currentKbIndexCapture, this.currentMouseIndexCapture);
+                this.currentKbIndexCapture++;
+                this.currentMouseIndexCapture++;
                 break;
             case "l":
-                showRecordings();
+                this.showRecordings();
                 break;
             case "e":
-                editMouseOrKeyboard();
+                this.editMouseOrKeyboard();
                 break;
             case "s":
-                saveAllInputs();
+                this.saveAllInputs();
                 break;
             case "l-k":
-                loadKeyInput();
+                this.loadKeyInput();
+                break;
             case "l-m":
-                loadMouseInput();
+                this.loadMouseInput();
                 break;
         }
     }
 
     // EFFECTS: save all inputs into files, numbered, and with unix-ts
     private void saveAllInputs() {
-        saveKeyboardInputs();
-        saveMouseInputs();
+        this.saveKeyboardInputs();
+        this.saveMouseInputs();
     }
 
     // EFFECTS: save all kb inputs into files, with unix ts
@@ -133,11 +138,11 @@ public class ConsoleApp {
     // EFFECTS: adds a mouse input json schema to list, increments capture position
     private void loadMouseInput() {
         System.out.print("Please type the path of the .minput file (including name of file) to load: ");
-        String path = scanner.next();
+        String path = this.scanner.next();
         JsonReader reader = new JsonReader(path);
 
         TimeSeries<MouseInputTime> loaded = null;
-        currentIndexCapture++;
+        this.currentMouseIndexCapture++;
 
         try {
             loaded = (TimeSeries<MouseInputTime>) reader.readTimeSeries(MouseInputTime.class);
@@ -155,11 +160,11 @@ public class ConsoleApp {
     // EFFECTS: adds a key input to list, increments capture position.
     private void loadKeyInput() {
         System.out.print("Please type the path of the .kinput file (including name of file) to load: ");
-        String path = scanner.next();
+        String path = this.scanner.next();
         JsonReader reader = new JsonReader(path);
 
         TimeSeries<KeyboardInputTime> loaded = null;
-        currentIndexCapture++;
+        this.currentKbIndexCapture++;
 
         try {
             loaded = (TimeSeries<KeyboardInputTime>) reader.readTimeSeries(KeyboardInputTime.class);
@@ -179,20 +184,20 @@ public class ConsoleApp {
     // EFFECTS: edits user's desired mouse/keyboard input
     private void editMouseOrKeyboard() {
         System.out.println("Input type of capture: ");
-        String type = scanner.nextLine().toLowerCase();
-        if (!(type.equals("keyboard") || type.equals("mouse"))) {
+        String type = this.scanner.nextLine().toLowerCase();
+        if (!("keyboard".equals(type) || "mouse".equals(type))) {
             System.out.println("Invalid option");
             return;
         }
 
         System.out.print("Input recording number: ");
-        int recordingNumber = scanner.nextInt();
+        int recordingNumber = this.scanner.nextInt();
         System.out.println();
         System.out.print("Input input number: ");
-        int inputNumber = scanner.nextInt();
+        int inputNumber = this.scanner.nextInt();
 
-        if (type.equals("keyboard")) {
-            handleKeyboard(recordingNumber, inputNumber);
+        if ("keyboard".equals(type)) {
+            this.handleKeyboard(recordingNumber, inputNumber);
         }
     }
 
@@ -201,19 +206,19 @@ public class ConsoleApp {
     private void handleKeyboard(int recordingNumber, int inputNumber) {
         KeyPress keyPress;
         System.out.print("Input Key ID: ");
-        int keyID = scanner.nextInt();
+        int keyID = this.scanner.nextInt();
         System.out.println();
         System.out.print("Keyup or keydown? (type down/up): ");
-        String keyUpOrDown = scanner.next();
-        if (keyUpOrDown.equals("up")) {
+        String keyUpOrDown = this.scanner.next();
+        if ("up".equals(keyUpOrDown)) {
             keyPress = KeyPress.UP;
-        } else if (keyUpOrDown.equals("down")) {
+        } else if ("down".equals(keyUpOrDown)) {
             keyPress = KeyPress.DOWN;
         } else {
             return;
         }
         System.out.print("Nanoseconds after start?");
-        long newDeltaTime = scanner.nextLong();
+        long newDeltaTime = this.scanner.nextLong();
         this.keyboardCaptures.get(recordingNumber).editKey(inputNumber,
                 new KeyboardInputTime(keyID, keyPress,
                         this.keyboardCaptures.get(recordingNumber).getStartTime() + newDeltaTime)
@@ -222,16 +227,16 @@ public class ConsoleApp {
 
     // EFFECTS: display all recorded inputs
     private void showRecordings() {
-        showKeyboard();
-        showMouse();
+        this.showKeyboard();
+        this.showMouse();
     }
 
     // EFFECTS: shows all keyboard recordings
     private void showKeyboard() {
         System.out.println("Keyboard input captures:");
-        for (int i = 0; i < keyboardCaptures.size(); i++) {
+        for (int i = 0; i < this.keyboardCaptures.size(); i++) {
             System.out.printf("Recording number %d\n", (i + 1));
-            TimeSeries<KeyboardInputTime> keyboardInputs = keyboardCaptures.get(i);
+            TimeSeries<KeyboardInputTime> keyboardInputs = this.keyboardCaptures.get(i);
             for (int j = 0; j < keyboardInputs.getInputs().size(); j++) {
                 KeyboardInputTime eventTime = keyboardInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <Character: %d, Stroke Type %s, Ms %d>\n",
@@ -245,9 +250,9 @@ public class ConsoleApp {
     // EFFECTS: shows all mouse recordings
     private void showMouse() {
         System.out.println("Mouse input captures: ");
-        for (int i = 0; i < mouseCaptures.size(); i++) {
+        for (int i = 0; i < this.mouseCaptures.size(); i++) {
             System.out.printf("Recording number %d\n", (i + 1));
-            TimeSeries<MouseInputTime> mouseInputs = mouseCaptures.get(i);
+            TimeSeries<MouseInputTime> mouseInputs = this.mouseCaptures.get(i);
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <X: %d, Y: %d, Event detailsz: %s>\n",
@@ -271,17 +276,17 @@ public class ConsoleApp {
 
     // MODIFIES: this
     // EFFECTS: captures user mouse and kb inputs
-    private void capture(int index) {
-        var keyboardCapture = keyboardCaptures.get(index);
-        var mouseCapture = mouseCaptures.get(index);
+    private void capture(int kbIndex, int mouseIndex) {
+        var keyboardCapture = this.keyboardCaptures.get(kbIndex);
+        var mouseCapture = this.mouseCaptures.get(mouseIndex);
         System.out.println("Beginning keyboard/mouse capture... Press enter to stop.");
         this.captureTool.setKeyboardCaptures(keyboardCapture);
         this.captureTool.setMouseCaptures(mouseCapture);
-        startCapture();
-        scanner.nextLine();
+        this.startCapture();
+        this.scanner.nextLine();
         // remove last elem of kb captures as that's an enter to stop input
         keyboardCapture.deleteIndex(this.keyboardCaptures.size() - 1);
-        stopCapture();
+        this.stopCapture();
         System.out.println("Capture made.");
     }
 

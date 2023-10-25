@@ -5,6 +5,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 // inspired by dr. carter's json serialization demo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriter<T extends Writeable> {
@@ -21,9 +22,9 @@ public class JsonWriter<T extends Writeable> {
     // MODIFIES: this
     // EFFECTS: opens file for writing
     public void open() throws IOException {
-        File file = new File(filePath);
+        File file = new File(this.filePath);
         file.createNewFile();
-        printWriter = new PrintWriter(file);
+        this.printWriter = new PrintWriter(file, StandardCharsets.UTF_8);
     }
 
     // REQUIRES: this.open() has been called once.
@@ -31,13 +32,13 @@ public class JsonWriter<T extends Writeable> {
     // EFFECTS: writes to file
     public void write(T object) {
         JSONObject objectAsJson = object.toJson();
-        printWriter.write(objectAsJson.toString(TAB_SIZE));
+        this.printWriter.write(objectAsJson.toString(TAB_SIZE));
     }
 
     // REQUIRES: this.open() has been called
     // MODIFIES: this
     // EFFECTS: closes file handle
     public void close() {
-        printWriter.close();
+        this.printWriter.close();
     }
 }

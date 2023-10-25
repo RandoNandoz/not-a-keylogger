@@ -38,11 +38,11 @@ public class JsonReader {
     // REQUIRES: the json we're reading is actually a representation of a time series of kbinputtimes
     // EFFECTS: reads given json path as a TimeSeries<KeyboardInputTime>
     private TimeSeries<KeyboardInputTime> readKeyboardTimeSeries() throws IOException {
-        JSONObject object = new JSONObject(readFile(pathToJson));
+        JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");
         for (int i = 0; i < inputsAsJson.length(); i++) {
-            inputs.add(readKbInput(inputsAsJson.getJSONObject(i)));
+            inputs.add(this.readKbInput(inputsAsJson.getJSONObject(i)));
         }
         long startTime = object.getLong("startTime");
         return new TimeSeries<>(inputs, startTime);
@@ -51,11 +51,11 @@ public class JsonReader {
     // REQUIRES: the json were reading is actually a representation of TimeSeries<minputtimes>.
     // EFFECTS: reads json as MouseTimeSeries
     private TimeSeries<MouseInputTime> readMouseTimeSeries() throws IOException {
-        JSONObject object = new JSONObject(readFile(pathToJson));
+        JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");
         for (int i = 0; i < inputsAsJson.length(); i++) {
-            inputs.add(readMouseInput(inputsAsJson.getJSONObject(i)));
+            inputs.add(this.readMouseInput(inputsAsJson.getJSONObject(i)));
         }
         long startTime = object.getLong("startTime");
         return new TimeSeries<>(inputs, startTime);
@@ -64,12 +64,13 @@ public class JsonReader {
     // EFFECTS: returns timeseries at JSON
     // TODO: make java shut up about unchecked casts?
     public TimeSeries<? extends InputTime> readTimeSeries(Class<? extends InputTime> c) throws IOException {
-        if (c == KeyboardInputTime.class) {
-            return readKeyboardTimeSeries();
-        } else if (c == MouseInputTime.class) {
-            return readMouseTimeSeries();
+        assert (InputTime.class.isAssignableFrom(c));
+        assert (KeyboardInputTime.class == c || MouseInputTime.class == c);
+        if (KeyboardInputTime.class == c) {
+            return this.readKeyboardTimeSeries();
+        } else {
+            return this.readMouseTimeSeries();
         }
-        throw new IllegalArgumentException("Must pass either KeyboardInputTime.class, or MouseInputTime.class");
     }
 
     // EFFECTS: reads source file as string and returns it

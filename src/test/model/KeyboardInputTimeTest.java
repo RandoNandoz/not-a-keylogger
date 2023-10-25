@@ -110,9 +110,9 @@ class KeyboardInputTimeTest {
 
     @Test
     void testHashCode() {
-        KeyPress kp = KeyPress.DOWN;
-        int keyId = 20;
-        long nsRecordedTs = 300;
+        final KeyPress kp = KeyPress.DOWN;
+        final int keyId = 20;
+        final long nsRecordedTs = 300;
         int expectedHash = Objects.hash(kp, keyId, nsRecordedTs);
 
         var keyIn = new KeyboardInputTime(keyId, kp, nsRecordedTs);

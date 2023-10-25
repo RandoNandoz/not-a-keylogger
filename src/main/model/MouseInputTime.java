@@ -4,7 +4,7 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import org.json.JSONObject;
 import persistence.Writeable;
 
-public class MouseInputTime extends InputTime implements Writeable {
+public class MouseInputTime extends InputTime {
     private final NativeMouseEvent event;
 
     // REQUIRES: nsSinceStart >= 0
@@ -38,7 +38,7 @@ public class MouseInputTime extends InputTime implements Writeable {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (null == o || this.getClass() != o.getClass()) {
             return false;
         }
         MouseInputTime that = (MouseInputTime) o;

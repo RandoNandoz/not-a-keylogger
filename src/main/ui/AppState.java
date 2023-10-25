@@ -11,7 +11,7 @@ public class AppState {
     // MODIFIES: this
     // EFFECTS: returns the unique instance of app state, otherwise, create a new one.
     public static AppState getInstance() {
-        if (singleton == null) {
+        if (null == AppState.singleton) {
             singleton = new AppState();
         }
         return singleton;
@@ -19,7 +19,7 @@ public class AppState {
 
     // trivial getters & setters
     public boolean isRecording() {
-        return recording;
+        return this.recording;
     }
 
     public void setRecording(boolean recording) {
