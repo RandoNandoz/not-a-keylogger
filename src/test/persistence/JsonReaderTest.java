@@ -62,7 +62,7 @@ class JsonReaderTest {
 
     @Test
     void testConstructIllegalReader() { // this is a dumb test
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(AssertionError.class, () -> {
             mouseInputTimeReader.readTimeSeries(FakeClass.class);
         });
     }
