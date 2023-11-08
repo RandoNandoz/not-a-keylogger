@@ -1,11 +1,11 @@
 package persistence;
 
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
+
+import org.json.JSONObject;
 
 // inspired by dr. carter's json serialization demo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriter<T extends Writeable> {

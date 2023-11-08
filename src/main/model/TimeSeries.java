@@ -1,13 +1,14 @@
 package model;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import persistence.Writeable;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import persistence.Writeable;
 
 public class TimeSeries<T extends InputTime> implements Writeable {
     private final ArrayList<T> inputs;

@@ -1,13 +1,7 @@
 package persistence;
 
-import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
-import model.KeyPress;
-import model.KeyboardInputTime;
-import model.MouseInputTime;
-import model.TimeSeries;
-import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,7 +10,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.json.JSONObject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
+
+import model.KeyPress;
+import model.KeyboardInputTime;
+import model.MouseInputTime;
+import model.TimeSeries;
 
 class JsonWriterTest {
     JsonWriter<MouseInputTime> mouseUnitWriter;

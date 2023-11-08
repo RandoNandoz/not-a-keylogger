@@ -1,8 +1,6 @@
 package model;
 
 import org.json.JSONObject;
-import persistence.Writeable;
-
 import java.util.Objects;
 
 /**

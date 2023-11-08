@@ -1,6 +1,7 @@
 package model;
 
 import org.json.JSONObject;
+
 import persistence.Writeable;
 
 public abstract class InputTime implements Comparable<InputTime>, Writeable {

@@ -1,14 +1,22 @@
 package model;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+import java.util.TreeSet;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 
 class TimeSeriesTest {
     private Random rd;

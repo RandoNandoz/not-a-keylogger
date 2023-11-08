@@ -1,7 +1,15 @@
 package ui;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.NoSuchFileException;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
+
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
@@ -9,13 +17,6 @@ import model.TimeSeries;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tools.CaptureTool;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.NoSuchFileException;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ConsoleApp {
     private final ArrayList<TimeSeries<KeyboardInputTime>> keyboardCaptures;

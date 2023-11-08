@@ -1,8 +1,8 @@
 package model;
 
-import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import org.json.JSONObject;
-import persistence.Writeable;
+
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
 public class MouseInputTime extends InputTime {
     private final NativeMouseEvent event;

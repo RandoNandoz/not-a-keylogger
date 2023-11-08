@@ -1,25 +1,20 @@
 package persistence;
 
-import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
-import model.*;
-import org.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-class FakeClass extends InputTime {
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
-    @Override
-    public JSONObject toJson() {
-        return null;
-    }
-}
+import model.KeyPress;
+import model.KeyboardInputTime;
+import model.MouseInputTime;
+import model.TimeSeries;
 
 class JsonReaderTest {
     JsonReader keyboardInputTimeReader;
@@ -33,8 +28,8 @@ class JsonReaderTest {
 
     @Test
     void testReadKeyIn() throws IOException {
-        TimeSeries<KeyboardInputTime> k = (TimeSeries<KeyboardInputTime>)
-                keyboardInputTimeReader.readTimeSeries(KeyboardInputTime.class);
+        TimeSeries<KeyboardInputTime> k = (TimeSeries<KeyboardInputTime>) keyboardInputTimeReader
+                .readTimeSeries(KeyboardInputTime.class);
         KeyboardInputTime kbInputTime = new KeyboardInputTime(1, KeyPress.UP, 5);
         final long startTime = 3;
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
@@ -45,17 +40,15 @@ class JsonReaderTest {
 
     @Test
     void testReadMouseIn() throws IOException {
-        TimeSeries<MouseInputTime> m = (TimeSeries<MouseInputTime>)
-                mouseInputTimeReader.readTimeSeries(MouseInputTime.class);
+        TimeSeries<MouseInputTime> m = (TimeSeries<MouseInputTime>) mouseInputTimeReader
+                .readTimeSeries(MouseInputTime.class);
         MouseInputTime mi = new MouseInputTime(new NativeMouseEvent(
-                1,2,3,4,1,3
-        ), 20);
+                1, 2, 3, 4, 1, 3), 20);
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
         inputs.add(mi);
         TimeSeries<MouseInputTime> expected = new TimeSeries<>(
                 inputs,
-                10
-        );
+                10);
 
         assertEquals(expected, m);
     }

@@ -1,13 +1,14 @@
 package model;
 
-import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.TreeSet;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
 class MouseInputTimeTest {
     MouseInputTime mouseInputTime;
