@@ -26,8 +26,8 @@ public class ConsoleApp {
     int currentMouseIndexCapture;
     int currentKbIndexCapture;
 
-
-    // EFFECTS: starts a new console version of the kb capture tool, with no captures,
+    // EFFECTS: starts a new console version of the kb capture tool, with no
+    // captures,
     // Registers native hook, and prompts user for input as well
     public ConsoleApp() {
         try {
@@ -66,7 +66,8 @@ public class ConsoleApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: dispatches calls to helper methods when different options are picked,
+    // EFFECTS: dispatches calls to helper methods when different options are
+    // picked,
     // adds new capture when capture picked
     private void processCommand(String cmd) {
         switch (cmd) {
@@ -150,7 +151,7 @@ public class ConsoleApp {
         this.currentMouseIndexCapture++;
 
         try {
-            loaded = (TimeSeries<MouseInputTime>) reader.readTimeSeries(MouseInputTime.class);
+            loaded = reader.readMouseTimeSeries();
         } catch (NoSuchFileException e) {
             System.out.println("No such file exists!");
         } catch (IOException e) {
@@ -172,7 +173,7 @@ public class ConsoleApp {
         this.currentKbIndexCapture++;
 
         try {
-            loaded = (TimeSeries<KeyboardInputTime>) reader.readTimeSeries(KeyboardInputTime.class);
+            loaded = reader.readKeyboardTimeSeries();
         } catch (NoSuchFileException e) {
             System.out.println("Illegal path");
             e.printStackTrace();
@@ -226,8 +227,7 @@ public class ConsoleApp {
         long newDeltaTime = this.scanner.nextLong();
         this.keyboardCaptures.get(recordingNumber).editKey(inputNumber,
                 new KeyboardInputTime(keyID, keyPress,
-                        this.keyboardCaptures.get(recordingNumber).getStartTime() + newDeltaTime)
-        );
+                        this.keyboardCaptures.get(recordingNumber).getStartTime() + newDeltaTime));
     }
 
     // EFFECTS: display all recorded inputs
@@ -246,8 +246,7 @@ public class ConsoleApp {
                 KeyboardInputTime eventTime = keyboardInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <Character: %d, Stroke Type %s, Ms %d>\n",
                         j, eventTime.getKeyId(), eventTime.getKeyPress(), eventTime.getDeltaTime(
-                                keyboardInputs.getStartTime()
-                        ) / 1000000); // ns->ms conversion ratio
+                                keyboardInputs.getStartTime()) / 1000000); // ns->ms conversion ratio
             }
         }
     }
@@ -261,8 +260,8 @@ public class ConsoleApp {
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <X: %d, Y: %d, Event detailsz: %s>\n",
-                        j, eventTime.getEvent().getX(), eventTime.getEvent().getY(), eventTime.getEvent().paramString()
-                );
+                        j, eventTime.getEvent().getX(), eventTime.getEvent().getY(),
+                        eventTime.getEvent().paramString());
             }
         }
     }

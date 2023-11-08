@@ -28,8 +28,7 @@ class JsonReaderTest {
 
     @Test
     void testReadKeyIn() throws IOException {
-        TimeSeries<KeyboardInputTime> k = (TimeSeries<KeyboardInputTime>) keyboardInputTimeReader
-                .readTimeSeries(KeyboardInputTime.class);
+        TimeSeries<KeyboardInputTime> k = keyboardInputTimeReader.readKeyboardTimeSeries();
         KeyboardInputTime kbInputTime = new KeyboardInputTime(1, KeyPress.UP, 5);
         final long startTime = 3;
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
@@ -40,8 +39,7 @@ class JsonReaderTest {
 
     @Test
     void testReadMouseIn() throws IOException {
-        TimeSeries<MouseInputTime> m = (TimeSeries<MouseInputTime>) mouseInputTimeReader
-                .readTimeSeries(MouseInputTime.class);
+        TimeSeries<MouseInputTime> m = mouseInputTimeReader.readMouseTimeSeries();
         MouseInputTime mi = new MouseInputTime(new NativeMouseEvent(
                 1, 2, 3, 4, 1, 3), 20);
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
@@ -51,12 +49,5 @@ class JsonReaderTest {
                 10);
 
         assertEquals(expected, m);
-    }
-
-    @Test
-    void testConstructIllegalReader() { // this is a dumb test
-        assertThrows(IllegalArgumentException.class, () -> {
-            mouseInputTimeReader.readTimeSeries(FakeClass.class);
-        });
     }
 }
