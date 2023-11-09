@@ -1,22 +1,14 @@
 package model;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import java.util.TreeSet;
-
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import java.lang.reflect.Field;
+import java.util.*;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TimeSeriesTest {
     private Random rd;
@@ -42,7 +34,6 @@ class TimeSeriesTest {
         }
         f.setAccessible(true);
 
-
         long startTimeInClass = (long) f.get(series);
 
         assertEquals(startTimeInClass, series.getStartTime());
@@ -50,21 +41,16 @@ class TimeSeriesTest {
 
     @Test
     void testEditErrorThrowing() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            series.editKey(-1, new KeyboardInputTime(
-                    0,
-                    KeyPress.DOWN,
-                    0
-            ));
-        });
+        assertThrows(IllegalArgumentException.class, () -> series.editKey(-1, new KeyboardInputTime(
+                0,
+                KeyPress.DOWN,
+                0)));
 
-        assertThrows(IllegalArgumentException.class, () -> {
-            series.editKey(series.getInputs().size() + 40, new KeyboardInputTime(
-                    0,
-                    KeyPress.DOWN,
-                    0
-            ));
-        });
+        assertThrows(IllegalArgumentException.class, () -> series.editKey(series.getInputs().size() + 40,
+                new KeyboardInputTime(
+                        0,
+                        KeyPress.DOWN,
+                        0)));
     }
 
     @Test
@@ -106,7 +92,7 @@ class TimeSeriesTest {
         KeyboardInputTime key4 = new KeyboardInputTime(NativeKeyEvent.VC_E, KeyPress.UP, 41);
         KeyboardInputTime key5 = new KeyboardInputTime(NativeKeyEvent.VC_A, KeyPress.UP, 42);
         KeyboardInputTime key6 = new KeyboardInputTime(NativeKeyEvent.VC_I, KeyPress.UP, 345345);
-        var keys = new KeyboardInputTime[]{key1, key2, key3, key4, key5, key6};
+        var keys = new KeyboardInputTime[] { key1, key2, key3, key4, key5, key6 };
 
         for (KeyboardInputTime key : keys) {
             series.addKey(key);
@@ -237,8 +223,7 @@ class TimeSeriesTest {
         assertEquals(14, series.editKey(4, new KeyboardInputTime(NativeKeyEvent.VC_SPACE, KeyPress.UP, 80)));
 
         assertEquals(new KeyboardInputTime(NativeKeyEvent.VC_SPACE, KeyPress.UP, 80), series.getInputs().get(
-                14
-        ));
+                14));
 
         assertEquals(oldSeriesSize, series.getInputs().size());
     }
@@ -294,7 +279,7 @@ class TimeSeriesTest {
 
         // different classes
         TreeSet<Integer> i = new TreeSet<>();
-//        assertNotEquals(i, inputs);
+        // assertNotEquals(i, inputs);
         assertNotEquals(inputs, i);
 
         // different start time, same inputs
@@ -308,16 +293,15 @@ class TimeSeriesTest {
 
         // compare with null
 
-        assertFalse(series.equals(null));
-        assertFalse(series.equals(i));
+        assertNotEquals(null, series);
+        assertNotEquals(series, i);
     }
 
     @Test
     void testHashCode() {
         int expectedHash = Objects.hash(
                 this.series.getInputs(),
-                this.series.getStartTime()
-        );
+                this.series.getStartTime());
 
         assertEquals(expectedHash, this.series.hashCode());
     }

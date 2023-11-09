@@ -14,7 +14,8 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     private final ArrayList<T> inputs;
     private final long startTime;
 
-    // EFFECTS: creates a new keyboard input times series capture with an empty list of captures
+    // EFFECTS: creates a new keyboard input times series capture with an empty list
+    // of captures
     public TimeSeries() {
         this.startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
@@ -28,7 +29,8 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     // REQUIRES: inputTime.getNsSinceStart() >= 0,
     // MODIFIES: this
     // EFFECTS: adds keyEvent to the internal list that holds the keyEvent in
-    //          temporal order (that is, sorted from s, guarantees that getInputs() will be in sorted order after call
+    // temporal order (that is, sorted from s, guarantees that getInputs() will be
+    // in sorted order after call
     public void addKey(T inputTime) {
         if (this.inputs.isEmpty()) {
             this.inputs.add(inputTime);
@@ -49,22 +51,23 @@ public class TimeSeries<T extends InputTime> implements Writeable {
 
     private boolean isInPosition(T inputTime, int i) {
         // because our list is in order, we're always greater than the previous
-//        boolean greaterThanPrev = this.inputs.get(i).getNsRecordedTimeStamp() < inputTime.getNsRecordedTimeStamp();
-        boolean lessThanNext = inputTime.getNsRecordedTimeStamp() < this.inputs.get(i + 1).getNsRecordedTimeStamp();
-        return lessThanNext;
+        // boolean greaterThanPrev = this.inputs.get(i).getNsRecordedTimeStamp() <
+        // inputTime.getNsRecordedTimeStamp();
+        return inputTime.getNsRecordedTimeStamp() < this.inputs.get(i + 1).getNsRecordedTimeStamp();
     }
 
     // REQUIRES: inputTime.getNsSinceStart() >= 0
     // MODIFIES: this
     // EFFECTS: modifies the NativeKeyEvent at this index
-    //          preserves sorted order of data
-    //          returns the new index of the key
-    //          throws IllegalArgumentException if index < 0 or larger or equal to than this.getInputs().size()
+    // preserves sorted order of data
+    // returns the new index of the key
+    // throws IllegalArgumentException if index < 0 or larger or equal to than
+    // this.getInputs().size()
     public int editKey(int index, T inputTime) {
         if (0 > index || index >= this.getInputs().size()) {
             throw new IllegalArgumentException("Invalid index to edit.");
         }
-//        KeyboardInputTime inputToEdit = this.inputs.get(index);
+        // KeyboardInputTime inputToEdit = this.inputs.get(index);
         this.inputs.remove(index);
         this.inputs.add(inputTime);
 

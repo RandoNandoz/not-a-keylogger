@@ -1,19 +1,17 @@
 package persistence;
 
+import model.KeyboardInputTime;
+import model.MouseInputTime;
+import model.TimeSeries;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import model.InputTime;
-import model.KeyboardInputTime;
-import model.MouseInputTime;
-import model.TimeSeries;
 
 // From Dr. Carter's JSON Example https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonReader {
@@ -61,19 +59,6 @@ public class JsonReader {
         long startTime = object.getLong("startTime");
         return new TimeSeries<>(inputs, startTime);
     }
-
-    // EFFECTS: returns timeseries at JSON
-    // TODO: make java shut up about unchecked casts?
-//     public TimeSeries<? extends InputTime> readTimeSeries(Class<? extends InputTime> c) throws IOException {
-// //        assert (InputTime.class.isAssignableFrom(c));
-// //        assert (KeyboardInputTime.class == c || MouseInputTime.class == c);
-//         if (KeyboardInputTime.class == c) {
-//             return this.readKeyboardTimeSeries();
-//         } else if (MouseInputTime.class == c) {
-//             return this.readMouseTimeSeries();
-//         }
-//         throw new IllegalArgumentException("Must provide known subclass of InputTime!");
-//     }
 
     // EFFECTS: reads source file as string and returns it
     private String readFile(String source) throws IOException {

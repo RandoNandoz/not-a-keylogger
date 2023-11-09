@@ -105,7 +105,7 @@ class JsonWriterTest {
         mouseWriter.close();
 
         JsonReader reader = new JsonReader("./data/testWriteMouseInputs.minput");
-        TimeSeries<MouseInputTime> fromJson = (TimeSeries<MouseInputTime>) reader.readMouseTimeSeries();
+        TimeSeries<MouseInputTime> fromJson = reader.readMouseTimeSeries();
         assertEquals(mouseInputs, fromJson);
     }
 
