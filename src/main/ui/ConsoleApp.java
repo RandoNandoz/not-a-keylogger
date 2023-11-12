@@ -23,8 +23,8 @@ public class ConsoleApp {
     private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
     private final Scanner scanner;
     private final CaptureTool captureTool;
-    int currentMouseIndexCapture;
-    int currentKbIndexCapture;
+    private int currentMouseIndexCapture;
+    private int currentKbIndexCapture;
 
     // EFFECTS: starts a new console version of the kb capture tool, with no
     // captures,

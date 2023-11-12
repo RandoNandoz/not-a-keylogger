@@ -1,5 +1,6 @@
 package ui.tools;
 
+import model.KeyPress;
 import model.KeyboardInputTime;
 import model.TimeSeries;
 
@@ -12,8 +13,15 @@ public class PlaybackTool {
         this.playbackRb = new Robot();
     }
 
-    // TODO: implement
+    // EFFECTS: plays back given keyboard inputs.
     public void playKbInputs(TimeSeries<KeyboardInputTime> kbInputs) {
-        // kbInputs.
+        kbInputs.getInputs().forEach(
+                (e) -> {
+                    if (e.getKeyPress() == KeyPress.UP) {
+                        playbackRb.keyPress(e.getKeyId());
+                    } else {
+                        playbackRb.keyRelease(e.getKeyId());
+                    }
+                });
     }
 }

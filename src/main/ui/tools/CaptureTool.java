@@ -1,5 +1,8 @@
 package ui.tools;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
