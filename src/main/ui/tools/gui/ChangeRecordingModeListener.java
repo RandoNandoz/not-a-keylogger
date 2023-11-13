@@ -6,12 +6,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import ui.AppState;
+import ui.GuiApp;
+import ui.tools.RecordingController;
 
 public class ChangeRecordingModeListener implements ActionListener {
     private final JButton clientButton;
+    private final RecordingController rc;
 
     public ChangeRecordingModeListener(JButton b) {
         this.clientButton = b;
+        rc = RecordingController.getInstance();
     }
 
 
@@ -36,9 +40,11 @@ public class ChangeRecordingModeListener implements ActionListener {
         System.out.println(infoString);
 
         if (newRecordingState) {
+            rc.addNewCapture();
             this.clientButton.setText("Stop Recording");
             System.out.println("Setting label to \"Stop Recording\"");
         } else {
+
             this.clientButton.setText("Start Recording");
             System.out.println("Setting label to \"Start Recording\"");
         }

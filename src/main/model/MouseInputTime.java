@@ -49,6 +49,11 @@ public class MouseInputTime extends InputTime {
                 && this.nsRecordedTimeStamp == that.nsRecordedTimeStamp;
     }
 
+    @Override
+    public String getType() {
+        return "Mouse";
+    }
+
     // EFFECTS: returns jsonObject representation of class
     @Override
     public JSONObject toJson() {

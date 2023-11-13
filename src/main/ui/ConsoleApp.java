@@ -259,7 +259,7 @@ public class ConsoleApp {
             TimeSeries<MouseInputTime> mouseInputs = this.mouseCaptures.get(i);
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
-                System.out.printf("Input number %d: <X: %d, Y: %d, Event detailsz: %s>\n",
+                System.out.printf("Input number %d: <X: %d, Y: %d, Event details: %s>\n",
                         j, eventTime.getEvent().getX(), eventTime.getEvent().getY(),
                         eventTime.getEvent().paramString());
             }

@@ -1,9 +1,14 @@
 package ui;
 
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
         if (args.length == 0) {
-            new GuiApp();
+//            new GuiApp();
+            SwingUtilities.invokeLater(
+                    GuiApp::new
+            );
         } else if (args[0].equals("--cli")) {
             new ConsoleApp();
         } else {

@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import persistence.Writeable;
 
-public abstract class InputTime implements Comparable<InputTime>, Writeable {
+public abstract class InputTime implements Comparable<InputTime>, Writeable, TypeInfoRevealable {
     protected long nsRecordedTimeStamp;
 
     // REQUIRES:  startTime < nsRecordedTimeStamp, that is, the recording must have started

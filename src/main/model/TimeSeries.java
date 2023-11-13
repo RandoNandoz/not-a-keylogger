@@ -1,9 +1,10 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.lang.reflect.ParameterizedType;
+import com.google.common.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 import persistence.Writeable;
 
 public class TimeSeries<T extends InputTime> implements Writeable {
+
     private final ArrayList<T> inputs;
     private final long startTime;
 
@@ -22,6 +24,9 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     }
 
     public TimeSeries(ArrayList<T> inputs, long startTime) {
+        //https://stackoverflow.com/a/19775924
+        // why did I use generics in java?????
+
         this.inputs = inputs;
         this.startTime = startTime;
     }
@@ -103,6 +108,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         return objectAsJson;
     }
 
+
     // EFFECTS: performs deep comparison of all values in class.
     @Override
     public boolean equals(Object object) {
@@ -120,5 +126,19 @@ public class TimeSeries<T extends InputTime> implements Writeable {
     @Override
     public int hashCode() {
         return Objects.hash(this.inputs, this.startTime);
+    }
+
+    @Override
+    public String toString() {
+        long totalTimeElapsed = this.inputs.stream().mapToLong(v -> v.getDeltaTime(startTime)).sum();
+        String inputType;
+        if (this.inputs.isEmpty()) {
+            inputType = "Unknown";
+        } else {
+            inputType = this.inputs.get(0).getType();
+        }
+        String result;
+        result = String.format("Type: %s, Total Time: %d seconds", inputType, totalTimeElapsed);
+        return result;
     }
 }

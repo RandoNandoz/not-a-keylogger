@@ -1,6 +1,7 @@
 package model;
 
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -293,8 +294,10 @@ class TimeSeriesTest {
 
         // compare with null
 
-        assertNotEquals(null, series);
-        assertNotEquals(series, i);
+        //noinspection SimplifiableAssertion
+        assertFalse(series.equals(null));
+        //noinspection SimplifiableAssertion
+        assertFalse(i.equals(series));
     }
 
     @Test
@@ -304,5 +307,23 @@ class TimeSeriesTest {
                 this.series.getStartTime());
 
         assertEquals(expectedHash, this.series.hashCode());
+    }
+
+    @Test
+    void testToString() {
+        TimeSeries<KeyboardInputTime> k = new TimeSeries<>();
+        TimeSeries<MouseInputTime> m = new TimeSeries<>();
+
+        k.addKey(new KeyboardInputTime(1, KeyPress.UP, k.getStartTime() + 10));
+
+        m.addKey(new MouseInputTime(new NativeMouseEvent(1, 2,3,4,5,6),
+                m.getStartTime() + 30));
+
+        TimeSeries<InputTime> u = new TimeSeries<>();
+
+        assertEquals("Type: Unknown, Total Time: 0 seconds", u.toString());
+
+        assertEquals("Type: Keyboard, Total Time: 10 seconds", k.toString());
+        assertEquals("Type: Mouse, Total Time: 30 seconds", m.toString());
     }
 }

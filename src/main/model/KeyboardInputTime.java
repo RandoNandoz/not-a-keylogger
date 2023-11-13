@@ -61,6 +61,11 @@ public class KeyboardInputTime extends InputTime {
         return json;
     }
 
+    @Override
+    public String getType() {
+        return "Keyboard";
+    }
+
     // EFFECTS: reates an instance of this from a json object
     public static KeyboardInputTime fromJson(JSONObject jsonObject) {
         var keyPress = KeyPress.valueOf(jsonObject.getString("keyPress"));

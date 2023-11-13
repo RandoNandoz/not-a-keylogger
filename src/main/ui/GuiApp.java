@@ -2,14 +2,12 @@ package ui;
 
 import javax.swing.*;
 
-import model.KeyboardInputTime;
-import model.MouseInputTime;
+import model.InputTime;
 import model.TimeSeries;
 import ui.tools.RecordingController;
 import ui.tools.gui.ChangeRecordingModeListener;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class GuiApp {
     private final RecordingController rc;
@@ -20,9 +18,11 @@ public class GuiApp {
     private final JFrame window;
     private final JPanel viewPanel;
 
+    private JList<TimeSeries<? extends InputTime>> timeSeriesList;
+
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
-        this.rc = new RecordingController();
+        this.rc = RecordingController.getInstance();
         setUpNativeLookAndFeel();
         this.window = new JFrame(WINDOW_TITLE);
         this.viewPanel = new JPanel();
@@ -89,11 +89,16 @@ public class GuiApp {
     // MODIFIES: this
     // EFFECTS: adds list UI element to app
     private void addList() {
-        JList<String> inputList = new JList<>();
-        inputList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        inputList.setLayoutOrientation(JList.VERTICAL);
+        this.timeSeriesList = new JList<>();
+        this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        this.timeSeriesList.setLayoutOrientation(JList.VERTICAL);
 
-        this.viewPanel.add(inputList);
+        this.viewPanel.add(timeSeriesList);
+    }
+
+    public void refreshList(TimeSeries<? extends InputTime> series) {
+//        this.timeSeriesList.setModel(rc.getMouseCaptures());
+        this.timeSeriesList = new JList<>(series.getInputs().toArray(new TimeSeries[series.getInputs().size()]));
     }
 
     // MODIFIES: this
