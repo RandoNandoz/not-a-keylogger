@@ -5,16 +5,14 @@ import javax.swing.*;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
 import model.TimeSeries;
+import ui.tools.RecordingController;
 import ui.tools.gui.ChangeRecordingModeListener;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 public class GuiApp {
-    private final ArrayList<TimeSeries<KeyboardInputTime>> kbCaptures;
-    private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
-    private int currentKbCapturePtr;
-    private int currentMouseCapturePtr;
+    private final RecordingController rc;
     private static final int WIDTH = 1366;
     private static final int HEIGHT = 768;
     private static final String WINDOW_TITLE = "Not a Keylogger";
@@ -24,10 +22,7 @@ public class GuiApp {
 
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
-        this.kbCaptures = new ArrayList<>();
-        this.mouseCaptures = new ArrayList<>();
-        this.currentKbCapturePtr = 0;
-        this.currentMouseCapturePtr = 0;
+        this.rc = new RecordingController();
         setUpNativeLookAndFeel();
         this.window = new JFrame(WINDOW_TITLE);
         this.viewPanel = new JPanel();
