@@ -1,22 +1,19 @@
 package ui.tools;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseInputListener;
 
+import model.InputRecording;
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 import ui.AppState;
 
 public class CaptureTool implements NativeKeyListener, NativeMouseInputListener {
-    private TimeSeries<KeyboardInputTime> keyboardCaptures;
-    private TimeSeries<MouseInputTime> mouseCaptures;
+    private InputRecording<KeyboardInputTime> keyboardCaptures;
+    private InputRecording<MouseInputTime> mouseCaptures;
 
     // EFFECTS: creates new capture tool with null captures, one must set the arrays to capture for.
     public CaptureTool() {
@@ -93,11 +90,11 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
         }
     }
 
-    public void setKeyboardCaptures(TimeSeries<KeyboardInputTime> keyboardCaptures) {
+    public void setKeyboardCaptures(InputRecording<KeyboardInputTime> keyboardCaptures) {
         this.keyboardCaptures = keyboardCaptures;
     }
 
-    public void setMouseCaptures(TimeSeries<MouseInputTime> mouseCaptures) {
+    public void setMouseCaptures(InputRecording<MouseInputTime> mouseCaptures) {
         this.mouseCaptures = mouseCaptures;
     }
 }

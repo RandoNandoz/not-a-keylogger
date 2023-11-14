@@ -2,7 +2,7 @@ package ui.tools;
 
 import model.KeyPress;
 import model.KeyboardInputTime;
-import model.TimeSeries;
+import model.InputRecording;
 
 import java.awt.*;
 
@@ -14,7 +14,7 @@ public class PlaybackTool {
     }
 
     // EFFECTS: plays back given keyboard inputs.
-    public void playKbInputs(TimeSeries<KeyboardInputTime> kbInputs) {
+    public void playKbInputs(InputRecording<KeyboardInputTime> kbInputs) {
         kbInputs.getInputs().forEach(
                 (e) -> {
                     if (e.getKeyPress() == KeyPress.UP) {
@@ -24,4 +24,6 @@ public class PlaybackTool {
                     }
                 });
     }
+
+    // EFFECTS: plays back given
 }

@@ -11,13 +11,13 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TimeSeriesTest {
+class InputRecordingTest {
     private Random rd;
-    private TimeSeries<KeyboardInputTime> series;
+    private InputRecording<KeyboardInputTime> series;
 
     @BeforeEach
     void setUp() {
-        this.series = new TimeSeries<>();
+        this.series = new InputRecording<>();
         this.rd = new Random();
     }
 
@@ -28,7 +28,7 @@ class TimeSeriesTest {
         // weird reflection hack
         Field f;
         try {
-            f = TimeSeries.class.getDeclaredField("startTime");
+            f = InputRecording.class.getDeclaredField("startTime");
         } catch (NoSuchFieldException e) {
             // this should never happen
             throw new RuntimeException(e);
@@ -261,15 +261,15 @@ class TimeSeriesTest {
     @Test
     void testEquals() throws Exception {
         // same object
-        TimeSeries<KeyboardInputTime> inputs = new TimeSeries<>();
+        InputRecording<KeyboardInputTime> inputs = new InputRecording<>();
         assertEquals(inputs, inputs);
 
         // same values, different refs
-        TimeSeries<KeyboardInputTime> definitelyDifferent = new TimeSeries<>();
+        InputRecording<KeyboardInputTime> definitelyDifferent = new InputRecording<>();
         // we have to mutate private field to be the same
         // bad practice but wtv
         // https://www.geeksforgeeks.org/how-to-access-private-field-and-method-using-reflection-in-java/
-        Field startTime = TimeSeries.class.getDeclaredField("startTime");
+        Field startTime = InputRecording.class.getDeclaredField("startTime");
         startTime.setAccessible(true);
         startTime.setLong(definitelyDifferent, inputs.getStartTime());
 
@@ -284,7 +284,7 @@ class TimeSeriesTest {
         assertNotEquals(inputs, i);
 
         // different start time, same inputs
-        TimeSeries<KeyboardInputTime> inputs1 = new TimeSeries<>();
+        InputRecording<KeyboardInputTime> inputs1 = new InputRecording<>();
         assertNotEquals(inputs1, inputs);
 
         // same start time, diff inputs
@@ -311,15 +311,15 @@ class TimeSeriesTest {
 
     @Test
     void testToString() {
-        TimeSeries<KeyboardInputTime> k = new TimeSeries<>();
-        TimeSeries<MouseInputTime> m = new TimeSeries<>();
+        InputRecording<KeyboardInputTime> k = new InputRecording<>();
+        InputRecording<MouseInputTime> m = new InputRecording<>();
 
         k.addKey(new KeyboardInputTime(1, KeyPress.UP, k.getStartTime() + 10));
 
         m.addKey(new MouseInputTime(new NativeMouseEvent(1, 2,3,4,5,6),
                 m.getStartTime() + 30));
 
-        TimeSeries<InputTime> u = new TimeSeries<>();
+        InputRecording<InputTime> u = new InputRecording<>();
 
         assertEquals("Type: Unknown, Total Time: 0 seconds", u.toString());
 

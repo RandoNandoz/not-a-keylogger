@@ -1,12 +1,14 @@
 package ui;
 
-import javax.swing.*;
 
+import com.github.kwhat.jnativehook.NativeHookException;
+import model.InputRecording;
 import model.InputTime;
-import model.TimeSeries;
 import ui.tools.RecordingController;
 import ui.tools.gui.ChangeRecordingModeListener;
+import ui.tools.gui.InputRecordingSelectListener;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class GuiApp {
@@ -18,12 +20,19 @@ public class GuiApp {
     private final JFrame window;
     private final JPanel viewPanel;
 
-    private JList<TimeSeries<? extends InputTime>> timeSeriesList;
+    private JList<InputRecording<? extends InputTime>> timeSeriesList;
 
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
-        this.rc = RecordingController.getInstance();
         setUpNativeLookAndFeel();
+        try {
+            this.rc = new RecordingController();
+        } catch (NativeHookException e) {
+            popUpError("Unable to add input listener, check if you have granted permissions for this app.",
+                    "Error!");
+            System.exit(1);
+            throw new RuntimeException("This shouldn't ever be thrown!");
+        }
         this.window = new JFrame(WINDOW_TITLE);
         this.viewPanel = new JPanel();
         initApp();
@@ -81,7 +90,7 @@ public class GuiApp {
         buttonPanel.add(recordButton);
         buttonPanel.add(playbackButton);
 
-        recordButton.addActionListener(new ChangeRecordingModeListener(recordButton));
+        recordButton.addActionListener(new ChangeRecordingModeListener(recordButton, rc, this));
 
         this.viewPanel.add(buttonPanel);
     }
@@ -93,12 +102,24 @@ public class GuiApp {
         this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         this.timeSeriesList.setLayoutOrientation(JList.VERTICAL);
 
+        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener());
+
         this.viewPanel.add(timeSeriesList);
     }
 
-    public void refreshList(TimeSeries<? extends InputTime> series) {
-//        this.timeSeriesList.setModel(rc.getMouseCaptures());
-        this.timeSeriesList = new JList<>(series.getInputs().toArray(new TimeSeries[series.getInputs().size()]));
+    public void refreshList(java.util.List<InputRecording<? extends InputTime>> series) {
+//        this.timeSeriesList = new JList<InputRecording<InputTime>>(series.toArray(new InputRecording[0]));
+        DefaultListModel<InputRecording<? extends InputTime>> model = new DefaultListModel<>();
+        for (var i : series) {
+            model.addElement(i);
+        }
+        this.timeSeriesList.setModel(model);
+        this.timeSeriesList.updateUI();
+    }
+
+    private void popUpError(String errMsg, String title) {
+        JOptionPane.showMessageDialog(new JFrame(), errMsg, title,
+                JOptionPane.ERROR_MESSAGE);
     }
 
     // MODIFIES: this

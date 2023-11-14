@@ -10,17 +10,17 @@ import java.util.Scanner;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 
+import model.InputRecording;
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tools.CaptureTool;
 
 public class ConsoleApp {
-    private final ArrayList<TimeSeries<KeyboardInputTime>> keyboardCaptures;
-    private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
+    private final ArrayList<InputRecording<KeyboardInputTime>> keyboardCaptures;
+    private final ArrayList<InputRecording<MouseInputTime>> mouseCaptures;
     private final Scanner scanner;
     private final CaptureTool captureTool;
     private int currentMouseIndexCapture;
@@ -93,8 +93,8 @@ public class ConsoleApp {
     }
 
     private void startCaptureMovePointers() {
-        this.keyboardCaptures.add(new TimeSeries<>());
-        this.mouseCaptures.add(new TimeSeries<>());
+        this.keyboardCaptures.add(new InputRecording<>());
+        this.mouseCaptures.add(new InputRecording<>());
         this.capture(this.currentKbIndexCapture, this.currentMouseIndexCapture);
         this.currentKbIndexCapture++;
         this.currentMouseIndexCapture++;
@@ -110,7 +110,7 @@ public class ConsoleApp {
     private void saveKeyboardInputs() {
         long unixTimestamp = Instant.now().getEpochSecond();
         for (int i = 0; i < this.keyboardCaptures.size(); i++) {
-            JsonWriter<TimeSeries<KeyboardInputTime>> kbWriter;
+            JsonWriter<InputRecording<KeyboardInputTime>> kbWriter;
             kbWriter = new JsonWriter<>(String.format("./data/kbRecording-%d-%d.kbinput", unixTimestamp, i));
             try {
                 kbWriter.open();
@@ -127,7 +127,7 @@ public class ConsoleApp {
     private void saveMouseInputs() {
         long unixTimestamp = Instant.now().getEpochSecond();
         for (int i = 0; i < this.mouseCaptures.size(); i++) {
-            JsonWriter<TimeSeries<MouseInputTime>> mouseWriter;
+            JsonWriter<InputRecording<MouseInputTime>> mouseWriter;
             mouseWriter = new JsonWriter<>(String.format("./data/mouseRecording-%d-%d.minput", unixTimestamp, i));
             try {
                 mouseWriter.open();
@@ -147,7 +147,7 @@ public class ConsoleApp {
         String path = this.scanner.next();
         JsonReader reader = new JsonReader(path);
 
-        TimeSeries<MouseInputTime> loaded = null;
+        InputRecording<MouseInputTime> loaded = null;
         this.currentMouseIndexCapture++;
 
         try {
@@ -169,7 +169,7 @@ public class ConsoleApp {
         String path = this.scanner.next();
         JsonReader reader = new JsonReader(path);
 
-        TimeSeries<KeyboardInputTime> loaded = null;
+        InputRecording<KeyboardInputTime> loaded = null;
         this.currentKbIndexCapture++;
 
         try {
@@ -241,7 +241,7 @@ public class ConsoleApp {
         System.out.println("Keyboard input captures:");
         for (int i = 0; i < this.keyboardCaptures.size(); i++) {
             System.out.printf("Recording number %d\n", (i + 1));
-            TimeSeries<KeyboardInputTime> keyboardInputs = this.keyboardCaptures.get(i);
+            InputRecording<KeyboardInputTime> keyboardInputs = this.keyboardCaptures.get(i);
             for (int j = 0; j < keyboardInputs.getInputs().size(); j++) {
                 KeyboardInputTime eventTime = keyboardInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <Character: %d, Stroke Type %s, Ms %d>\n",
@@ -256,7 +256,7 @@ public class ConsoleApp {
         System.out.println("Mouse input captures: ");
         for (int i = 0; i < this.mouseCaptures.size(); i++) {
             System.out.printf("Recording number %d\n", (i + 1));
-            TimeSeries<MouseInputTime> mouseInputs = this.mouseCaptures.get(i);
+            InputRecording<MouseInputTime> mouseInputs = this.mouseCaptures.get(i);
             for (int j = 0; j < mouseInputs.getInputs().size(); j++) {
                 MouseInputTime eventTime = mouseInputs.getInputs().get(j);
                 System.out.printf("Input number %d: <X: %d, Y: %d, Event details: %s>\n",

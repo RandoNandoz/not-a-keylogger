@@ -1,8 +1,8 @@
 package persistence;
 
+import model.InputRecording;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -35,8 +35,8 @@ public class JsonReader {
     }
 
     // REQUIRES: the json we're reading is actually a representation of a time series of kbinputtimes
-    // EFFECTS: reads given json path as a TimeSeries<KeyboardInputTime>
-    public TimeSeries<KeyboardInputTime> readKeyboardTimeSeries() throws IOException {
+    // EFFECTS: reads given json path as a InputRecording<KeyboardInputTime>
+    public InputRecording<KeyboardInputTime> readKeyboardTimeSeries() throws IOException {
         JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");
@@ -44,12 +44,12 @@ public class JsonReader {
             inputs.add(this.readKbInput(inputsAsJson.getJSONObject(i)));
         }
         long startTime = object.getLong("startTime");
-        return new TimeSeries<>(inputs, startTime);
+        return new InputRecording<>(inputs, startTime);
     }
 
-    // REQUIRES: the json were reading is actually a representation of TimeSeries<minputtimes>.
+    // REQUIRES: the json were reading is actually a representation of InputRecording<minputtimes>.
     // EFFECTS: reads json as MouseTimeSeries
-    public TimeSeries<MouseInputTime> readMouseTimeSeries() throws IOException {
+    public InputRecording<MouseInputTime> readMouseTimeSeries() throws IOException {
         JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");
@@ -57,7 +57,7 @@ public class JsonReader {
             inputs.add(this.readMouseInput(inputsAsJson.getJSONObject(i)));
         }
         long startTime = object.getLong("startTime");
-        return new TimeSeries<>(inputs, startTime);
+        return new InputRecording<>(inputs, startTime);
     }
 
     // EFFECTS: reads source file as string and returns it

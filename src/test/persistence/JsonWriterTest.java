@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import model.InputRecording;
 import org.json.JSONObject;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,13 +20,12 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 
 class JsonWriterTest {
     JsonWriter<MouseInputTime> mouseUnitWriter;
     JsonWriter<KeyboardInputTime> keyboardUnitWriter;
-    JsonWriter<TimeSeries<KeyboardInputTime>> kbWriter;
-    JsonWriter<TimeSeries<MouseInputTime>> mouseWriter;
+    JsonWriter<InputRecording<KeyboardInputTime>> kbWriter;
+    JsonWriter<InputRecording<MouseInputTime>> mouseWriter;
 
     @BeforeEach
     void setUp() {
@@ -71,7 +71,7 @@ class JsonWriterTest {
 
     @Test
     void testWriteKeyboardSeries() throws IOException {
-        TimeSeries<KeyboardInputTime> kbInputs = new TimeSeries<>();
+        InputRecording<KeyboardInputTime> kbInputs = new InputRecording<>();
         kbInputs.addKey(new KeyboardInputTime(1, KeyPress.DOWN, 30));
         kbInputs.addKey(new KeyboardInputTime(1, KeyPress.DOWN, 23));
 
@@ -85,13 +85,13 @@ class JsonWriterTest {
         kbWriter.close();
 
         JsonReader reader = new JsonReader("./data/testWriteKbInputs.kbinput");
-        TimeSeries<KeyboardInputTime> fromJson = reader.readKeyboardTimeSeries();
+        InputRecording<KeyboardInputTime> fromJson = reader.readKeyboardTimeSeries();
         assertEquals(kbInputs, fromJson);
     }
 
     @Test
     void testWriteMouseSeries() throws IOException {
-        TimeSeries<MouseInputTime> mouseInputs = new TimeSeries<>();
+        InputRecording<MouseInputTime> mouseInputs = new InputRecording<>();
         mouseInputs.addKey(new MouseInputTime(new NativeMouseEvent(1, 2,3,4,5,6), 3000));
         mouseInputs.addKey(new MouseInputTime(new NativeMouseEvent(7, 8,9,10,11,12), 283));
 
@@ -105,7 +105,7 @@ class JsonWriterTest {
         mouseWriter.close();
 
         JsonReader reader = new JsonReader("./data/testWriteMouseInputs.minput");
-        TimeSeries<MouseInputTime> fromJson = reader.readMouseTimeSeries();
+        InputRecording<MouseInputTime> fromJson = reader.readMouseTimeSeries();
         assertEquals(mouseInputs, fromJson);
     }
 

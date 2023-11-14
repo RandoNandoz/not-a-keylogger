@@ -6,6 +6,7 @@ public class AppState {
 
     // EFFECTS: creates a new UNIQUE state of our app's state
     private AppState() {
+        this.recording = false;
     }
 
     // MODIFIES: this

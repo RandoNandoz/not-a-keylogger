@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import model.InputRecording;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +14,6 @@ import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 
 class JsonReaderTest {
     JsonReader keyboardInputTimeReader;
@@ -27,23 +27,23 @@ class JsonReaderTest {
 
     @Test
     void testReadKeyIn() throws IOException {
-        TimeSeries<KeyboardInputTime> k = keyboardInputTimeReader.readKeyboardTimeSeries();
+        InputRecording<KeyboardInputTime> k = keyboardInputTimeReader.readKeyboardTimeSeries();
         KeyboardInputTime kbInputTime = new KeyboardInputTime(1, KeyPress.UP, 5);
         final long startTime = 3;
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
         inputs.add(kbInputTime);
 
-        assertEquals(new TimeSeries<>(inputs, startTime), k);
+        assertEquals(new InputRecording<>(inputs, startTime), k);
     }
 
     @Test
     void testReadMouseIn() throws IOException {
-        TimeSeries<MouseInputTime> m = mouseInputTimeReader.readMouseTimeSeries();
+        InputRecording<MouseInputTime> m = mouseInputTimeReader.readMouseTimeSeries();
         MouseInputTime mi = new MouseInputTime(new NativeMouseEvent(
                 1, 2, 3, 4, 1, 3), 20);
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
         inputs.add(mi);
-        TimeSeries<MouseInputTime> expected = new TimeSeries<>(
+        InputRecording<MouseInputTime> expected = new InputRecording<>(
                 inputs,
                 10);
 

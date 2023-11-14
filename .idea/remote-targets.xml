@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteTargetsManager">
+    <targets>
+      <target name="randyzhu@archlinux-vmware.local:22" type="ssh/sftp" uuid="3765c314-495b-407e-b958-c8381b94c669">
+        <config>
+          <option name="projectRootOnTarget" value="/home/randyzhu/Desktop/Project-Starter" />
+          <option name="serverName" value="randyzhu@archlinux-vmware.local:22 password" />
+        </config>
+        <ContributedStateBase type="JavaLanguageRuntime">
+          <config>
+            <option name="javaVersionString" value="11.0.21" />
+          </config>
+        </ContributedStateBase>
+      </target>
+    </targets>
+  </component>
+</project>

@@ -1,33 +1,39 @@
 package ui.tools;
 
+import com.github.kwhat.jnativehook.GlobalScreen;
+import com.github.kwhat.jnativehook.NativeHookException;
+import model.InputRecording;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import model.TimeSeries;
 
 import java.util.ArrayList;
 
 public class RecordingController {
-    private static RecordingController singleton;
     private final CaptureTool captureTool;
-    private final ArrayList<TimeSeries<KeyboardInputTime>> kbCaptures;
-    private final ArrayList<TimeSeries<MouseInputTime>> mouseCaptures;
+    private final ArrayList<InputRecording<KeyboardInputTime>> kbCaptures;
+    private final ArrayList<InputRecording<MouseInputTime>> mouseCaptures;
 
-    private RecordingController() {
+    // EFFECTS: creates a new object that controls the capture of keyboard/mouse inputs.
+    public RecordingController() throws NativeHookException {
         this.captureTool = new CaptureTool();
         this.kbCaptures = new ArrayList<>();
         this.mouseCaptures = new ArrayList<>();
+        this.bindListeners();
     }
 
-    public static RecordingController getInstance() {
-        if (null == RecordingController.singleton) {
-            singleton = new RecordingController();
-        }
-        return singleton;
+    // MODIFIES: this
+    // EFFECTS: Adds the capture listener, throws NativeHookException if unable to add due to security
+    // issues.
+    private void bindListeners() throws NativeHookException {
+        GlobalScreen.registerNativeHook();
+        GlobalScreen.addNativeKeyListener(this.captureTool);
+        GlobalScreen.addNativeMouseListener(this.captureTool);
     }
 
+    // EFFECTS: Gets controller to add
     public void addNewCapture() {
-        var newKbCapture = new TimeSeries<KeyboardInputTime>();
-        var newMouseCapture = new TimeSeries<MouseInputTime>();
+        var newKbCapture = new InputRecording<KeyboardInputTime>();
+        var newMouseCapture = new InputRecording<MouseInputTime>();
 
         this.kbCaptures.add(newKbCapture);
         this.mouseCaptures.add(newMouseCapture);
@@ -36,11 +42,11 @@ public class RecordingController {
         this.captureTool.setMouseCaptures(newMouseCapture);
     }
 
-    public ArrayList<TimeSeries<KeyboardInputTime>> getKbCaptures() {
+    public ArrayList<InputRecording<KeyboardInputTime>> getKbCaptures() {
         return kbCaptures;
     }
 
-    public ArrayList<TimeSeries<MouseInputTime>> getMouseCaptures() {
+    public ArrayList<InputRecording<MouseInputTime>> getMouseCaptures() {
         return mouseCaptures;
     }
 }

@@ -1,21 +1,25 @@
 package ui.tools.gui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-
+import model.InputRecording;
+import model.InputTime;
 import ui.AppState;
 import ui.GuiApp;
 import ui.tools.RecordingController;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 public class ChangeRecordingModeListener implements ActionListener {
     private final JButton clientButton;
     private final RecordingController rc;
+    private final GuiApp app;
 
-    public ChangeRecordingModeListener(JButton b) {
+    public ChangeRecordingModeListener(JButton b, RecordingController rc, GuiApp app) {
+        this.app = app;
         this.clientButton = b;
-        rc = RecordingController.getInstance();
+        this.rc = rc;
     }
 
 
@@ -44,11 +48,12 @@ public class ChangeRecordingModeListener implements ActionListener {
             this.clientButton.setText("Stop Recording");
             System.out.println("Setting label to \"Stop Recording\"");
         } else {
-
+            ArrayList<InputRecording<? extends InputTime>> concatenated = new ArrayList<>();
+            concatenated.addAll(rc.getMouseCaptures());
+            concatenated.addAll(rc.getKbCaptures());
+            this.app.refreshList(concatenated);
             this.clientButton.setText("Start Recording");
             System.out.println("Setting label to \"Start Recording\"");
         }
     }
-
-
 }

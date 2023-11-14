@@ -1,9 +1,5 @@
 package model;
 
-import java.lang.reflect.ParameterizedType;
-import com.google.common.reflect.TypeToken;
-
-import java.lang.reflect.Type;
 import java.util.*;
 
 import org.json.JSONArray;
@@ -11,19 +7,19 @@ import org.json.JSONObject;
 
 import persistence.Writeable;
 
-public class TimeSeries<T extends InputTime> implements Writeable {
+public class InputRecording<T extends InputTime> implements Writeable {
 
     private final ArrayList<T> inputs;
     private final long startTime;
 
     // EFFECTS: creates a new keyboard input times series capture with an empty list
     // of captures
-    public TimeSeries() {
+    public InputRecording() {
         this.startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
     }
 
-    public TimeSeries(ArrayList<T> inputs, long startTime) {
+    public InputRecording(ArrayList<T> inputs, long startTime) {
         //https://stackoverflow.com/a/19775924
         // why did I use generics in java?????
 
@@ -118,7 +114,7 @@ public class TimeSeries<T extends InputTime> implements Writeable {
         if (null == object || this.getClass() != object.getClass()) {
             return false;
         }
-        TimeSeries<?> that = (TimeSeries<?>) object;
+        InputRecording<?> that = (InputRecording<?>) object;
         return this.startTime == that.startTime && this.inputs.equals(that.inputs);
     }
 
