@@ -14,10 +14,8 @@ import java.util.ArrayList;
 public class ChangeRecordingModeListener implements ActionListener {
     private final JButton clientButton;
     private final RecordingController rc;
-    private final GuiApp app;
 
-    public ChangeRecordingModeListener(JButton b, RecordingController rc, GuiApp app) {
-        this.app = app;
+    public ChangeRecordingModeListener(JButton b, RecordingController rc) {
         this.clientButton = b;
         this.rc = rc;
     }
@@ -44,16 +42,21 @@ public class ChangeRecordingModeListener implements ActionListener {
         System.out.println(infoString);
 
         if (newRecordingState) {
-            rc.addNewCapture();
-            this.clientButton.setText("Stop Recording");
-            System.out.println("Setting label to \"Stop Recording\"");
+            startRecording();
         } else {
-            ArrayList<InputRecording<? extends InputTime>> concatenated = new ArrayList<>();
-            concatenated.addAll(rc.getMouseCaptures());
-            concatenated.addAll(rc.getKbCaptures());
-            this.app.refreshList(concatenated);
-            this.clientButton.setText("Start Recording");
-            System.out.println("Setting label to \"Start Recording\"");
+            stopRecording();
         }
+    }
+
+    private void startRecording() {
+        rc.addNewCapture();
+        this.clientButton.setText("Stop Recording");
+        System.out.println("Setting label to \"Stop Recording\"");
+    }
+
+    private void stopRecording() {
+        rc.refreshListView();
+        this.clientButton.setText("Start Recording");
+        System.out.println("Setting label to \"Start Recording\"");
     }
 }

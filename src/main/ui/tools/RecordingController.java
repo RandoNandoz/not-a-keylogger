@@ -3,18 +3,27 @@ package ui.tools;
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
 import model.InputRecording;
+import model.InputTime;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
+import ui.GuiApp;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class RecordingController {
     private final CaptureTool captureTool;
+    private final GuiApp app;
+    private final List<InputRecording<? extends InputTime>> uiList;
     private final ArrayList<InputRecording<KeyboardInputTime>> kbCaptures;
     private final ArrayList<InputRecording<MouseInputTime>> mouseCaptures;
 
     // EFFECTS: creates a new object that controls the capture of keyboard/mouse inputs.
-    public RecordingController() throws NativeHookException {
+    public RecordingController(GuiApp app) throws NativeHookException {
+        this.uiList = new ArrayList<>();
+        this.app = app;
         this.captureTool = new CaptureTool();
         this.kbCaptures = new ArrayList<>();
         this.mouseCaptures = new ArrayList<>();
@@ -42,11 +51,15 @@ public class RecordingController {
         this.captureTool.setMouseCaptures(newMouseCapture);
     }
 
-    public ArrayList<InputRecording<KeyboardInputTime>> getKbCaptures() {
-        return kbCaptures;
+    public void refreshListView() {
+        uiList.clear();
+        uiList.addAll(mouseCaptures);
+        uiList.addAll(kbCaptures);
+        uiList.removeIf(e -> e.getInputs().isEmpty());
+        this.app.refreshList(uiList);
     }
 
-    public ArrayList<InputRecording<MouseInputTime>> getMouseCaptures() {
-        return mouseCaptures;
+    public List<InputRecording<? extends InputTime>> getUiList() {
+        return uiList;
     }
 }

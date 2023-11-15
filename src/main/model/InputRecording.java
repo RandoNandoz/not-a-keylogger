@@ -126,15 +126,22 @@ public class InputRecording<T extends InputTime> implements Writeable {
 
     @Override
     public String toString() {
-        long totalTimeElapsed = this.inputs.stream().mapToLong(v -> v.getDeltaTime(startTime)).sum();
+        long totalTimeElapsed;
         String inputType;
         if (this.inputs.isEmpty()) {
+            totalTimeElapsed = 0;
             inputType = "Unknown";
         } else {
+            totalTimeElapsed = this.inputs.get(this.inputs.size() - 1).getDeltaTime(this.startTime);
             inputType = this.inputs.get(0).getType();
         }
         String result;
-        result = String.format("Type: %s, Total Time: %d seconds", inputType, totalTimeElapsed);
+        result = String.format("Type: %s, Total Time: %d seconds", inputType, toSecondsFromNs(totalTimeElapsed));
         return result;
+    }
+
+    private long toSecondsFromNs(long ns) {
+        final int CONVERSION_RATIO = 1000000;
+        return ns / CONVERSION_RATIO;
     }
 }

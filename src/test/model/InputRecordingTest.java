@@ -314,10 +314,10 @@ class InputRecordingTest {
         InputRecording<KeyboardInputTime> k = new InputRecording<>();
         InputRecording<MouseInputTime> m = new InputRecording<>();
 
-        k.addKey(new KeyboardInputTime(1, KeyPress.UP, k.getStartTime() + 10));
+        k.addKey(new KeyboardInputTime(1, KeyPress.UP, k.getStartTime() + 10 * 1000000));
 
         m.addKey(new MouseInputTime(new NativeMouseEvent(1, 2,3,4,5,6),
-                m.getStartTime() + 30));
+                m.getStartTime() + 30 * 1000000));
 
         InputRecording<InputTime> u = new InputRecording<>();
 

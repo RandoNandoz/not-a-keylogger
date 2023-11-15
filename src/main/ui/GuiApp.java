@@ -10,6 +10,7 @@ import ui.tools.gui.InputRecordingSelectListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Collection;
 
 public class GuiApp {
     private final RecordingController rc;
@@ -20,13 +21,15 @@ public class GuiApp {
     private final JFrame window;
     private final JPanel viewPanel;
 
+    private JList<InputTime> detailedViewList;
+
     private JList<InputRecording<? extends InputTime>> timeSeriesList;
 
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
         setUpNativeLookAndFeel();
         try {
-            this.rc = new RecordingController();
+            this.rc = new RecordingController(this);
         } catch (NativeHookException e) {
             popUpError("Unable to add input listener, check if you have granted permissions for this app.",
                     "Error!");
@@ -65,12 +68,13 @@ public class GuiApp {
         this.window.setLayout(new CardLayout());
 
         this.viewPanel.setBorder(BorderFactory.createEmptyBorder());
-        this.viewPanel.setLayout(new GridLayout());
+        this.viewPanel.setLayout(new GridLayout(1, 3));
 
         this.window.add(viewPanel, BorderLayout.CENTER);
 
         addButtons();
-        addList();
+        addDetailsPanel();
+        addRecordingList();
         addMenuBar();
 
         this.window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -83,31 +87,49 @@ public class GuiApp {
     // EFFECTS: Adds buttons to control playback and recording
     private void addButtons() {
         JButton recordButton = new JButton("Start Recording");
-        JButton playbackButton = new JButton("Playback");
+        JButton deleteButton = new JButton("Delete Recording");
 
         JPanel buttonPanel = new JPanel(new GridLayout(2, 0));
 
         buttonPanel.add(recordButton);
-        buttonPanel.add(playbackButton);
+        buttonPanel.add(deleteButton);
 
-        recordButton.addActionListener(new ChangeRecordingModeListener(recordButton, rc, this));
+//        deleteButton.addActionListener();
+        recordButton.addActionListener(new ChangeRecordingModeListener(recordButton, rc));
 
         this.viewPanel.add(buttonPanel);
     }
 
     // MODIFIES: this
     // EFFECTS: adds list UI element to app
-    private void addList() {
+    private void addRecordingList() {
         this.timeSeriesList = new JList<>();
-        this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.timeSeriesList.setLayoutOrientation(JList.VERTICAL);
 
-        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener());
+        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener(detailedViewList, this.rc));
 
         this.viewPanel.add(timeSeriesList);
     }
 
-    public void refreshList(java.util.List<InputRecording<? extends InputTime>> series) {
+    private void addDetailsPanel() {
+        JPanel detailsPanel = new JPanel();
+        JLabel detailsDesc = new JLabel("Details");
+
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.PAGE_AXIS));
+        this.detailedViewList = new JList<>();
+        this.detailedViewList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.detailedViewList.setLayoutOrientation(JList.VERTICAL);
+
+
+
+        detailsPanel.add(detailsDesc);
+        detailsPanel.add(detailedViewList);
+
+        this.viewPanel.add(detailsPanel);
+    }
+
+    public void refreshList(Collection<InputRecording<? extends InputTime>> series) {
 //        this.timeSeriesList = new JList<InputRecording<InputTime>>(series.toArray(new InputRecording[0]));
         DefaultListModel<InputRecording<? extends InputTime>> model = new DefaultListModel<>();
         for (var i : series) {
