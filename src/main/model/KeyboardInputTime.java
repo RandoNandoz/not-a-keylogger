@@ -66,7 +66,7 @@ public class KeyboardInputTime extends InputTime {
         return "Keyboard";
     }
 
-    // EFFECTS: reates an instance of this from a json object
+    // EFFECTS: creates an instance of this from a json object
     public static KeyboardInputTime fromJson(JSONObject jsonObject) {
         var keyPress = KeyPress.valueOf(jsonObject.getString("keyPress"));
         var keyId = jsonObject.getInt("keyId");

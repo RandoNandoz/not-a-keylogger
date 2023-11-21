@@ -67,4 +67,10 @@ public class MouseInputTime extends InputTime {
         json.put("nsRecordedTimeStamp", this.nsRecordedTimeStamp);
         return json;
     }
+
+    @Override
+    public String toString() {
+        return String.format("x: %d, y: %d, btn: %d",
+                this.event.getX(), this.event.getY(), this.event.getButton());
+    }
 }

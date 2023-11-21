@@ -51,6 +51,12 @@ public class RecordingController {
         this.captureTool.setMouseCaptures(newMouseCapture);
     }
 
+    public void removeFromDataList(int i) {
+        var uiElement = uiList.get(i);
+        this.kbCaptures.remove(uiElement);
+        this.mouseCaptures.remove(uiElement);
+    }
+
     public void refreshListView() {
         uiList.clear();
         uiList.addAll(mouseCaptures);

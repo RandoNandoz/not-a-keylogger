@@ -6,10 +6,13 @@ import model.InputRecording;
 import model.InputTime;
 import ui.tools.RecordingController;
 import ui.tools.gui.ChangeRecordingModeListener;
+import ui.tools.gui.DeleteViewListListener;
 import ui.tools.gui.InputRecordingSelectListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
 
 public class GuiApp {
@@ -27,6 +30,11 @@ public class GuiApp {
 
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
+        try {
+            splash();
+        } catch (IOException e) {
+            System.out.println("Unable to find picture of carp! Check if images folder has image!");
+        }
         setUpNativeLookAndFeel();
         try {
             this.rc = new RecordingController(this);
@@ -40,6 +48,17 @@ public class GuiApp {
         this.viewPanel = new JPanel();
         initApp();
         this.window.repaint(); // for good measure
+    }
+
+    private void splash() throws IOException {
+//        var s = SplashScreen.getSplashScreen();
+//        s.setImageURL(new URL("https://cdn.discordapp.com/attachments/1043274455826317392/1153782806644801729/image.png?ex=656f8179&is=655d0c79&hm=f271ee0eff397629308b56628e4138ae6b2c7830a460eb710a81d1e7536324ee&"));
+        JFrame j = new JFrame("A");
+        j.setSize(1000, 1000);
+        // https://stackoverflow.com/questions/18027833/adding-image-to-jframe
+        j.add(new JLabel(new ImageIcon(
+                new File("./images/what_a_load_of_carp.gif").toURI().toURL())));
+        j.setVisible(true);
     }
 
     // MODIFIES: this
@@ -72,12 +91,12 @@ public class GuiApp {
 
         this.window.add(viewPanel, BorderLayout.CENTER);
 
-        addButtons();
         addDetailsPanel();
         addRecordingList();
         addMenuBar();
+        addButtons();
 
-        this.window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setSize(WIDTH, HEIGHT);
         this.window.setResizable(false);
         this.window.setVisible(true);
@@ -94,7 +113,7 @@ public class GuiApp {
         buttonPanel.add(recordButton);
         buttonPanel.add(deleteButton);
 
-//        deleteButton.addActionListener();
+        deleteButton.addActionListener(new DeleteViewListListener(timeSeriesList, rc));
         recordButton.addActionListener(new ChangeRecordingModeListener(recordButton, rc));
 
         this.viewPanel.add(buttonPanel);
@@ -107,9 +126,12 @@ public class GuiApp {
         this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.timeSeriesList.setLayoutOrientation(JList.VERTICAL);
 
-        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener(detailedViewList, this.rc));
+        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener(timeSeriesList, detailedViewList,
+                this.rc));
 
-        this.viewPanel.add(timeSeriesList);
+        JScrollPane sp = new JScrollPane(timeSeriesList);
+
+        this.viewPanel.add(sp);
     }
 
     private void addDetailsPanel() {
@@ -124,7 +146,10 @@ public class GuiApp {
 
 
         detailsPanel.add(detailsDesc);
-        detailsPanel.add(detailedViewList);
+        JScrollPane sp = new JScrollPane(detailedViewList);
+        detailsPanel.add(sp);
+
+
 
         this.viewPanel.add(detailsPanel);
     }
@@ -162,6 +187,9 @@ public class GuiApp {
 
         JMenuItem saveOption = new JMenuItem("Save");
         JMenuItem loadOption = new JMenuItem("Load");
+
+//        saveOption.addActionListener();
+//        loadOption.addActionListener();
 
         fileMenu.add(saveOption);
         fileMenu.add(loadOption);
