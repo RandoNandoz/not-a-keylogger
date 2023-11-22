@@ -5,9 +5,7 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import model.InputRecording;
 import model.InputTime;
 import ui.tools.RecordingController;
-import ui.tools.gui.ChangeRecordingModeListener;
-import ui.tools.gui.DeleteViewListListener;
-import ui.tools.gui.InputRecordingSelectListener;
+import ui.tools.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Graphical UI
+ */
 public class GuiApp {
     private final RecordingController rc;
     private static final int WIDTH = 1366;
@@ -39,8 +40,7 @@ public class GuiApp {
         try {
             this.rc = new RecordingController(this);
         } catch (NativeHookException e) {
-            popUpError("Unable to add input listener, check if you have granted permissions for this app.",
-                    "Error!");
+            popUpError("Unable to add input listener, check if you have granted permissions for this app.", "Error!");
             System.exit(1);
             throw new RuntimeException("This shouldn't ever be thrown!");
         }
@@ -56,8 +56,7 @@ public class GuiApp {
         JFrame j = new JFrame("A");
         j.setSize(1000, 1000);
         // https://stackoverflow.com/questions/18027833/adding-image-to-jframe
-        j.add(new JLabel(new ImageIcon(
-                new File("./images/what_a_load_of_carp.gif").toURI().toURL())));
+        j.add(new JLabel(new ImageIcon(new File("./images/what_a_load_of_carp.gif").toURI().toURL())));
         j.setVisible(true);
     }
 
@@ -93,8 +92,8 @@ public class GuiApp {
 
         addDetailsPanel();
         addRecordingList();
-        addMenuBar();
         addButtons();
+        addMenuBar();
 
         this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.window.setSize(WIDTH, HEIGHT);
@@ -126,14 +125,16 @@ public class GuiApp {
         this.timeSeriesList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         this.timeSeriesList.setLayoutOrientation(JList.VERTICAL);
 
-        this.timeSeriesList.addListSelectionListener(new InputRecordingSelectListener(timeSeriesList, detailedViewList,
-                this.rc));
+        this.timeSeriesList.addListSelectionListener(
+                new InputRecordingSelectListener(timeSeriesList, detailedViewList, this.rc));
 
         JScrollPane sp = new JScrollPane(timeSeriesList);
 
         this.viewPanel.add(sp);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds detailed view of input recordings
     private void addDetailsPanel() {
         JPanel detailsPanel = new JPanel();
         JLabel detailsDesc = new JLabel("Details");
@@ -144,16 +145,16 @@ public class GuiApp {
         this.detailedViewList.setLayoutOrientation(JList.VERTICAL);
 
 
-
         detailsPanel.add(detailsDesc);
         JScrollPane sp = new JScrollPane(detailedViewList);
         detailsPanel.add(sp);
 
 
-
         this.viewPanel.add(detailsPanel);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates ui recording list with given list
     public void refreshList(Collection<InputRecording<? extends InputTime>> series) {
 //        this.timeSeriesList = new JList<InputRecording<InputTime>>(series.toArray(new InputRecording[0]));
         DefaultListModel<InputRecording<? extends InputTime>> model = new DefaultListModel<>();
@@ -164,9 +165,10 @@ public class GuiApp {
         this.timeSeriesList.updateUI();
     }
 
-    private void popUpError(String errMsg, String title) {
-        JOptionPane.showMessageDialog(new JFrame(), errMsg, title,
-                JOptionPane.ERROR_MESSAGE);
+    // MODIFIES: this
+    // EFFECTS: Pops up error if user does something bad
+    public void popUpError(String errMsg, String title) {
+        JOptionPane.showMessageDialog(new JFrame(), errMsg, title, JOptionPane.ERROR_MESSAGE);
     }
 
     // MODIFIES: this
@@ -190,6 +192,13 @@ public class GuiApp {
 
 //        saveOption.addActionListener();
 //        loadOption.addActionListener();
+
+//        if (selected == null) {
+//            popUpError("Cannot save with nothing selected!", "Error!");
+//        }
+
+        loadOption.addActionListener(new LoadListener(timeSeriesList, window, this, rc));
+        saveOption.addActionListener(new SaveListener(timeSeriesList, window));
 
         fileMenu.add(saveOption);
         fileMenu.add(loadOption);

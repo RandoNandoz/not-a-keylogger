@@ -13,7 +13,10 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
-// From Dr. Carter's JSON Example https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+/**
+ * From Dr. Carter's JSON Example <a href="https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo">here</a>
+ * Class to read either keyboard/mouse input times from JSON
+ */
 public class JsonReader {
     private final String pathToJson;
 
@@ -36,7 +39,7 @@ public class JsonReader {
 
     // REQUIRES: the json we're reading is actually a representation of a time series of kbinputtimes
     // EFFECTS: reads given json path as a InputRecording<KeyboardInputTime>
-    public InputRecording<KeyboardInputTime> readKeyboardTimeSeries() throws IOException {
+    public InputRecording<KeyboardInputTime> readKeyboardInputRecording() throws IOException {
         JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");
@@ -49,7 +52,7 @@ public class JsonReader {
 
     // REQUIRES: the json were reading is actually a representation of InputRecording<minputtimes>.
     // EFFECTS: reads json as MouseTimeSeries
-    public InputRecording<MouseInputTime> readMouseTimeSeries() throws IOException {
+    public InputRecording<MouseInputTime> readMouseInputRecording() throws IOException {
         JSONObject object = new JSONObject(this.readFile(this.pathToJson));
         ArrayList<MouseInputTime> inputs = new ArrayList<>();
         JSONArray inputsAsJson = object.getJSONArray("inputs");

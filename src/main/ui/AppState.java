@@ -1,5 +1,8 @@
 package ui;
 
+/**
+ * Singleton to hold app's state of whether recording or not
+ */
 public class AppState {
     private static AppState singleton;
     private boolean recording;

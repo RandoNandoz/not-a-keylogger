@@ -11,6 +11,9 @@ import model.KeyboardInputTime;
 import model.MouseInputTime;
 import ui.AppState;
 
+/**
+ * Implementation of listeners to store captured inputs into arraylists
+ */
 public class CaptureTool implements NativeKeyListener, NativeMouseInputListener {
     private InputRecording<KeyboardInputTime> keyboardCaptures;
     private InputRecording<MouseInputTime> mouseCaptures;

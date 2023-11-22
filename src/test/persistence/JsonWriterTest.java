@@ -85,7 +85,7 @@ class JsonWriterTest {
         kbWriter.close();
 
         JsonReader reader = new JsonReader("./data/testWriteKbInputs.kbinput");
-        InputRecording<KeyboardInputTime> fromJson = reader.readKeyboardTimeSeries();
+        InputRecording<KeyboardInputTime> fromJson = reader.readKeyboardInputRecording();
         assertEquals(kbInputs, fromJson);
     }
 
@@ -105,7 +105,7 @@ class JsonWriterTest {
         mouseWriter.close();
 
         JsonReader reader = new JsonReader("./data/testWriteMouseInputs.minput");
-        InputRecording<MouseInputTime> fromJson = reader.readMouseTimeSeries();
+        InputRecording<MouseInputTime> fromJson = reader.readMouseInputRecording();
         assertEquals(mouseInputs, fromJson);
     }
 

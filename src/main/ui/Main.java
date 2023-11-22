@@ -2,6 +2,9 @@ package ui;
 
 import javax.swing.*;
 
+/**
+ * Executor for app
+ */
 public class Main {
     public static void main(String[] args) {
         if (args.length == 0) {

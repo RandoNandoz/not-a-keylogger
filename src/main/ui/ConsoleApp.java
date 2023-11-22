@@ -18,6 +18,9 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.tools.CaptureTool;
 
+/**
+ * Console UI
+ */
 public class ConsoleApp {
     private final ArrayList<InputRecording<KeyboardInputTime>> keyboardCaptures;
     private final ArrayList<InputRecording<MouseInputTime>> mouseCaptures;
@@ -151,7 +154,7 @@ public class ConsoleApp {
         this.currentMouseIndexCapture++;
 
         try {
-            loaded = reader.readMouseTimeSeries();
+            loaded = reader.readMouseInputRecording();
         } catch (NoSuchFileException e) {
             System.out.println("No such file exists!");
         } catch (IOException e) {
@@ -173,7 +176,7 @@ public class ConsoleApp {
         this.currentKbIndexCapture++;
 
         try {
-            loaded = reader.readKeyboardTimeSeries();
+            loaded = reader.readKeyboardInputRecording();
         } catch (NoSuchFileException e) {
             System.out.println("Illegal path");
             e.printStackTrace();

@@ -120,4 +120,9 @@ class KeyboardInputTimeTest {
 
         assertEquals(expectedHash, keyIn.hashCode());
     }
+
+    @Test
+    void testToString() {
+        assertEquals("Keyboard Capture{keyPress=UP, keyId=0}", new KeyboardInputTime(0,KeyPress.UP,0).toString());
+    }
 }

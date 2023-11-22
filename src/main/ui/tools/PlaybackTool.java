@@ -6,9 +6,13 @@ import model.InputRecording;
 
 import java.awt.*;
 
+/**
+ * WIP class to actually replay inputs
+ */
 public class PlaybackTool {
     private final Robot playbackRb;
 
+    // EFFECTS: creates new playback object
     public PlaybackTool() throws AWTException, SecurityException {
         this.playbackRb = new Robot();
     }

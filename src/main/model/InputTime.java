@@ -4,6 +4,9 @@ import org.json.JSONObject;
 
 import persistence.Writeable;
 
+/**
+ * Abstract class that represents a pair of inputs/time.
+ **/
 public abstract class InputTime implements Comparable<InputTime>, Writeable, TypeInfoRevealable {
     protected long nsRecordedTimeStamp;
 

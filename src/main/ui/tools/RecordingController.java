@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Controller to hold data of app
+ */
 public class RecordingController {
     private final CaptureTool captureTool;
     private final GuiApp app;
@@ -51,12 +54,30 @@ public class RecordingController {
         this.captureTool.setMouseCaptures(newMouseCapture);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds new kb recording, refreshes view
+    public void addKbRecording(InputRecording<KeyboardInputTime> r) {
+        this.kbCaptures.add(r);
+        refreshListView();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds new mouse recording. refreshes view
+    public void addMouseRecording(InputRecording<MouseInputTime> r) {
+        this.mouseCaptures.add(r);
+        refreshListView();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: removes given index of uilist from data lists
     public void removeFromDataList(int i) {
         var uiElement = uiList.get(i);
         this.kbCaptures.remove(uiElement);
         this.mouseCaptures.remove(uiElement);
     }
 
+    // MODIFIES: this
+    // EFFECTS: Refreshes list with current inputs
     public void refreshListView() {
         uiList.clear();
         uiList.addAll(mouseCaptures);
@@ -64,6 +85,8 @@ public class RecordingController {
         uiList.removeIf(e -> e.getInputs().isEmpty());
         this.app.refreshList(uiList);
     }
+
+    // trivial getter
 
     public List<InputRecording<? extends InputTime>> getUiList() {
         return uiList;

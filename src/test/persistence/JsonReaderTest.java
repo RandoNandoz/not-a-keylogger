@@ -27,7 +27,7 @@ class JsonReaderTest {
 
     @Test
     void testReadKeyIn() throws IOException {
-        InputRecording<KeyboardInputTime> k = keyboardInputTimeReader.readKeyboardTimeSeries();
+        InputRecording<KeyboardInputTime> k = keyboardInputTimeReader.readKeyboardInputRecording();
         KeyboardInputTime kbInputTime = new KeyboardInputTime(1, KeyPress.UP, 5);
         final long startTime = 3;
         ArrayList<KeyboardInputTime> inputs = new ArrayList<>();
@@ -38,7 +38,7 @@ class JsonReaderTest {
 
     @Test
     void testReadMouseIn() throws IOException {
-        InputRecording<MouseInputTime> m = mouseInputTimeReader.readMouseTimeSeries();
+        InputRecording<MouseInputTime> m = mouseInputTimeReader.readMouseInputRecording();
         MouseInputTime mi = new MouseInputTime(new NativeMouseEvent(
                 1, 2, 3, 4, 1, 3), 20);
         ArrayList<MouseInputTime> inputs = new ArrayList<>();

@@ -1,6 +1,7 @@
 package model;
 
 import org.json.JSONObject;
+
 import java.util.Objects;
 
 /**
@@ -41,7 +42,8 @@ public class KeyboardInputTime extends InputTime {
             return false;
         }
         KeyboardInputTime that = (KeyboardInputTime) o;
-        return (this.nsRecordedTimeStamp == that.nsRecordedTimeStamp) &&  (this.keyId == that.keyId)
+        return (this.nsRecordedTimeStamp == that.nsRecordedTimeStamp)
+                && (this.keyId == that.keyId)
                 && (this.keyPress == that.keyPress);
     }
 
@@ -61,6 +63,7 @@ public class KeyboardInputTime extends InputTime {
         return json;
     }
 
+    // EFFECTS: reveals type of recording
     @Override
     public String getType() {
         return "Keyboard";
@@ -72,5 +75,11 @@ public class KeyboardInputTime extends InputTime {
         var keyId = jsonObject.getInt("keyId");
         var nsRecordedTimeStamp = jsonObject.getLong("nsRecordedTimeStamp");
         return new KeyboardInputTime(keyId, keyPress, nsRecordedTimeStamp);
+    }
+
+    // EFFECTS: Returns capture unit as string
+    @Override
+    public String toString() {
+        return "Keyboard Capture{" + "keyPress=" + keyPress + ", keyId=" + keyId + '}';
     }
 }

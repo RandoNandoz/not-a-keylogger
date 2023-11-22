@@ -4,6 +4,9 @@ import org.json.JSONObject;
 
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 
+/**
+ * Concrete implementation of input/time pair for mouse inputs
+ */
 public class MouseInputTime extends InputTime {
     private final NativeMouseEvent event;
 
@@ -68,6 +71,7 @@ public class MouseInputTime extends InputTime {
         return json;
     }
 
+    // EFFECTS: Returns capture unit as string
     @Override
     public String toString() {
         return String.format("x: %d, y: %d, btn: %d",

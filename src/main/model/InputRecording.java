@@ -7,18 +7,22 @@ import org.json.JSONObject;
 
 import persistence.Writeable;
 
+/**
+ * Generic container for input/time pairs. All operations preserve natural order.
+ **/
 public class InputRecording<T extends InputTime> implements Writeable {
 
     private final ArrayList<T> inputs;
     private final long startTime;
 
     // EFFECTS: creates a new keyboard input times series capture with an empty list
-    // of captures
+    // of captures with current start time
     public InputRecording() {
         this.startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
     }
 
+    // EFFECTS: creates new capture with given inputs and given starttime
     public InputRecording(ArrayList<T> inputs, long startTime) {
         //https://stackoverflow.com/a/19775924
         // why did I use generics in java?????

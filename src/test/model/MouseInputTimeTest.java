@@ -122,4 +122,9 @@ class MouseInputTimeTest {
         // compare with null
         assertNotEquals(mouseInputTime, null);
     }
+
+    @Test
+    void testToString() {
+        assertEquals("x: 0, y: 0, btn: 0", new MouseInputTime(new NativeMouseEvent(0, 0,0,0,0,0), 0).toString());
+    }
 }

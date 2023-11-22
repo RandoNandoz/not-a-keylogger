@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 
-// inspired by dr. carter's json serialization demo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+/**
+ * inspired by dr. carter's json serialization demo <a href="https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo">here</a>
+ * Writes the writeable class param to disk
+ * @param <T> Class that must extend writeable class.
+ */
 public class JsonWriter<T extends Writeable> {
     // 4 spaces/tab in JSON
     private static final int TAB_SIZE = 4;

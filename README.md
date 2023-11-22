@@ -1,13 +1,8 @@
-# Necromancer
-
-### What's a necromancer?
-
-A necromancer is someone who communicates with the dead - in this case, it reanimates
-previous instructions by a (hopefully not dead) user.
+# NOT A KEYLOGGER
 
 ### What does it do?
 
-Essentially, the application records previous keyboard and mouse inputs and plays them back.
+Essentially, the application records previous keyboard and mouse inputs ~~and plays them back.~~
 
 ### Who uses it?
 
@@ -31,6 +26,7 @@ For instance:
 <summary>User stories</summary>
 
 - I want to record my actions (mouse and keyboard events). ✅
+- I want to delete my actions ✅
 - I want to be able to play back these mouse and keyboard events. 
 - I want to be able to see what keyboard recordings are available to me. ✅
 - I want to preview the actions in an "intuitive way" before I play them. ✅
@@ -44,4 +40,12 @@ For instance:
 
 
 [Trello Board for Necromancer](https://trello.com/invite/b/LAWFnGcE/ATTIa9309b5f96d4a29a205ae0e6e418beb49B377540/necromancer-cpsc-210-term-project)
+
+### Instructions for Grader
+
+- You can generate the first required action related to the user story "I want to record my actions (mouse and keyboard events)" by clicking start recording and stopping when needed
+- You can generate the second required action related to the user story "I want to delete my actions" by clicking delete
+- You can locate the visual component when you start the app and see the beautiful gif
+- You can save the state of my app by going to the bar and file > save
+- You can load the state of my app by going to the bar and file > load
 
