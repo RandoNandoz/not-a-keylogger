@@ -43,9 +43,13 @@ public class Event {
 
     @Override
     public boolean equals(Object other) {
-        if (other == null) return false;
+        if (other == null) {
+            return false;
+        }
 
-        if (other.getClass() != this.getClass()) return false;
+        if (other.getClass() != this.getClass()) {
+            return false;
+        }
 
         Event otherEvent = (Event) other;
 

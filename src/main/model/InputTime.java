@@ -36,6 +36,7 @@ public abstract class InputTime implements Comparable<InputTime>, Writeable, Typ
     // EFFECTS: returns jsonObject representation of class
     public abstract JSONObject toJson();
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void finalize() {
         this.log.logEvent(new Event("Deleted input!"));

@@ -157,6 +157,7 @@ public class InputRecording<T extends InputTime> implements Writeable {
         return ns / CONVERSION_RATIO;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void finalize() {
         this.log.logEvent(new Event("Deleted all inputs recorded."));
