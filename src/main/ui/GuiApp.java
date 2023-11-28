@@ -17,11 +17,10 @@ import java.util.Collection;
  * Graphical UI
  */
 public class GuiApp {
-    private final RecordingController rc;
     private static final int WIDTH = 1366;
     private static final int HEIGHT = 768;
     private static final String WINDOW_TITLE = "Not a Keylogger";
-
+    private final RecordingController rc;
     private final JFrame window;
     private final JPanel viewPanel;
 
