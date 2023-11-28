@@ -3,10 +3,11 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Event class
@@ -29,6 +30,22 @@ public class EventTest {
     public void testEvent() {
         assertEquals("Sensor open at door", e.getDescription());
         assertEquals(d, e.getDate());
+    }
+
+    @Test
+    public void testEquals() {
+        //noinspection ConstantValue,SimplifiableAssertion
+        assertFalse(e.equals(null));
+
+        //noinspection EqualsBetweenInconvertibleTypes,SimplifiableAssertion
+        assertFalse(e.equals(new ArrayList<Integer>()));
+    }
+
+    @Test
+    public void testHashCode() {
+        final int HASH_CONSTANT = 13;
+        assertEquals(HASH_CONSTANT * e.getDate().hashCode() + e.getDescription().hashCode(),
+                e.hashCode());
     }
 
     @Test
