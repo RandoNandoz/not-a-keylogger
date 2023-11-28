@@ -72,8 +72,11 @@ public class RecordingController {
     // EFFECTS: removes given index of uilist from data lists
     public void removeFromDataList(int i) {
         var uiElement = uiList.get(i);
+//        this.kbCaptures.get(index).getInputs().clear();
         this.kbCaptures.remove(uiElement);
         this.mouseCaptures.remove(uiElement);
+        System.gc(); // run gc
+        System.runFinalization(); // run finalizers
     }
 
     // MODIFIES: this

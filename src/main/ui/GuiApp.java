@@ -2,6 +2,7 @@ package ui;
 
 
 import com.github.kwhat.jnativehook.NativeHookException;
+import model.EventLog;
 import model.InputRecording;
 import model.InputTime;
 import ui.tools.RecordingController;
@@ -9,6 +10,8 @@ import ui.tools.gui.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -28,8 +31,11 @@ public class GuiApp {
 
     private JList<InputRecording<? extends InputTime>> timeSeriesList;
 
+    EventLog log;
+
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
+        this.log = EventLog.getInstance();
         try {
             splash();
         } catch (IOException e) {
@@ -94,10 +100,26 @@ public class GuiApp {
         addButtons();
         addMenuBar();
 
-        this.window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.window.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.window.setSize(WIDTH, HEIGHT);
         this.window.setResizable(false);
         this.window.setVisible(true);
+        addLoggerListener();
+    }
+
+    private void addLoggerListener() {
+        this.window.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+//                System.out.println("Hi");
+                super.windowClosing(e);
+                log.forEach(ev -> {
+                    System.out.println(ev.getDate() + " "  + ev.getDescription());
+                });
+                e.getWindow().dispose();
+                System.exit(0);
+            }
+        });
     }
 
     // MODIFIES: this

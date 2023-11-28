@@ -34,7 +34,7 @@ public class InputRecordingSelectListener implements ListSelectionListener {
 
         int selectedIndex = this.parent.getSelectedIndex();
 
-        System.out.println(selectedIndex);
+//        System.out.println(selectedIndex);
 
         if (selectedIndex == -1) {
             return;

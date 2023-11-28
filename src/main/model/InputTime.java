@@ -8,6 +8,7 @@ import persistence.Writeable;
  * Abstract class that represents a pair of inputs/time.
  **/
 public abstract class InputTime implements Comparable<InputTime>, Writeable, TypeInfoRevealable {
+    EventLog log = EventLog.getInstance();
     protected long nsRecordedTimeStamp;
 
     // REQUIRES:  startTime < nsRecordedTimeStamp, that is, the recording must have started
@@ -34,4 +35,9 @@ public abstract class InputTime implements Comparable<InputTime>, Writeable, Typ
 
     // EFFECTS: returns jsonObject representation of class
     public abstract JSONObject toJson();
+
+    @Override
+    protected void finalize() {
+        this.log.logEvent(new Event("Deleted input!"));
+    }
 }

@@ -59,7 +59,7 @@ public class ChangeRecordingModeListener implements ActionListener {
     private void startRecording() {
         rc.addNewCapture();
         this.clientButton.setText("Stop Recording");
-        System.out.println("Setting label to \"Stop Recording\"");
+//        System.out.println("Setting label to \"Stop Recording\"");
     }
 
     // MODIFIES: this
@@ -67,6 +67,6 @@ public class ChangeRecordingModeListener implements ActionListener {
     private void stopRecording() {
         rc.refreshListView();
         this.clientButton.setText("Start Recording");
-        System.out.println("Setting label to \"Start Recording\"");
+//        System.out.println("Setting label to \"Start Recording\"");
     }
 }
