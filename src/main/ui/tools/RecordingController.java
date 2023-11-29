@@ -6,12 +6,10 @@ import model.InputRecording;
 import model.InputTime;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import ui.GuiApp;
+import ui.gui.GuiApp;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Controller to hold data of app
@@ -72,11 +70,21 @@ public class RecordingController {
     // EFFECTS: removes given index of uilist from data lists
     public void removeFromDataList(int i) {
         var uiElement = uiList.get(i);
+
 //        this.kbCaptures.get(index).getInputs().clear();
         this.kbCaptures.remove(uiElement);
         this.mouseCaptures.remove(uiElement);
-        System.gc(); // run gc
-        System.runFinalization(); // run finalizers
+//        uiElement.getInputs().clear();
+        while (true) {
+            try {
+                uiElement.deleteIndex(0);
+            } catch (IndexOutOfBoundsException e) {
+                break;
+            }
+        }
+//        System.gc(); // run gc
+//        System.runFinalization(); // run finalizers
+        refreshListView();
     }
 
     // MODIFIES: this

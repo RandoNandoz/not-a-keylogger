@@ -2,6 +2,8 @@ package model;
 
 import java.util.*;
 
+import model.logging.Event;
+import model.logging.EventLog;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,14 +17,14 @@ public class InputRecording<T extends InputTime> implements Writeable {
     private final ArrayList<T> inputs;
     private final long startTime;
 
-    EventLog log;
+//    EventLog log;
 
     // EFFECTS: creates a new keyboard input times series capture with an empty list
     // of captures with current start time
     public InputRecording() {
         this.startTime = System.nanoTime();
         this.inputs = new ArrayList<>();
-        this.log = EventLog.getInstance();
+//        EventLog.getInstance() = EventLog.getInstance();
     }
 
     // EFFECTS: creates new capture with given inputs and given starttime
@@ -42,19 +44,19 @@ public class InputRecording<T extends InputTime> implements Writeable {
     public void addKey(T inputTime) {
         if (this.inputs.isEmpty()) {
             this.inputs.add(inputTime);
-            this.log.logEvent(new Event("Added new input to input recording list!"));
+            EventLog.getInstance().logEvent(new Event("Added new input to input recording list!"));
         } else if (0 > this.inputs.get(this.inputs.size() - 1).compareTo(inputTime)) {
             this.inputs.add(inputTime);
-            this.log.logEvent(new Event("Added new input to input recording list!"));
+            EventLog.getInstance().logEvent(new Event("Added new input to input recording list!"));
         } else if (0 > inputTime.compareTo(this.inputs.get(0))) {
             this.inputs.add(0, inputTime);
-            this.log.logEvent(new Event("Added new input to input recording list!"));
+            EventLog.getInstance().logEvent(new Event("Added new input to input recording list!"));
         } else {
             for (int i = 0; true; i++) { // horrible code coverage hack, only because we're graded on codecov.
                 boolean inPosition = isInPosition(inputTime, i);
                 if (inPosition) {
                     this.inputs.add(i + 1, inputTime);
-                    this.log.logEvent(new Event("Added new input to input recording list!"));
+                    EventLog.getInstance().logEvent(new Event("Added new input to input recording list!"));
                     return; // cause of bad coverage
                 }
             }
@@ -92,7 +94,7 @@ public class InputRecording<T extends InputTime> implements Writeable {
     // EFFECTS: deletes the given index, preserving sorted order
     public void deleteIndex(int index) {
         this.inputs.remove(index);
-        this.log.logEvent(new Event("Deleting input at index " + index));
+        EventLog.getInstance().logEvent(new Event("Deleting input at index " + index));
     }
 
     public List<T> getInputs() {
@@ -157,9 +159,13 @@ public class InputRecording<T extends InputTime> implements Writeable {
         return ns / CONVERSION_RATIO;
     }
 
-    @SuppressWarnings("deprecation")
-    @Override
-    protected void finalize() {
-        this.log.logEvent(new Event("Deleted all inputs recorded."));
-    }
+//    @Override
+//    public void close() throws Exception {
+//        EventLog.getInstance().logEvent(new Event("Deleted all inputs recorded."));
+//    }
+
+//    @Override
+//    protected void finalize() {
+//        EventLog.getInstance().logEvent(new Event("Deleted all inputs recorded."));
+//    }
 }

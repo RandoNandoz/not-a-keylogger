@@ -3,7 +3,7 @@ package ui.tools.gui;
 import model.InputRecording;
 import model.InputTime;
 import persistence.JsonReader;
-import ui.GuiApp;
+import ui.gui.GuiApp;
 import ui.tools.RecordingController;
 
 import javax.swing.*;

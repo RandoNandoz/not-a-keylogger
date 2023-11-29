@@ -1,8 +1,8 @@
-package ui;
+package ui.gui;
 
 
 import com.github.kwhat.jnativehook.NativeHookException;
-import model.EventLog;
+import model.logging.EventLog;
 import model.InputRecording;
 import model.InputTime;
 import ui.tools.RecordingController;
@@ -31,11 +31,8 @@ public class GuiApp {
 
     private JList<InputRecording<? extends InputTime>> timeSeriesList;
 
-    EventLog log;
-
     // EFFECTS: starts the GUI version of this app
     public GuiApp() {
-        this.log = EventLog.getInstance();
         try {
             splash();
         } catch (IOException e) {
@@ -111,9 +108,8 @@ public class GuiApp {
         this.window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-//                System.out.println("Hi");
-                super.windowClosing(e);
-                log.forEach(ev -> {
+                super.windowClosing(e); // idk what this does
+                EventLog.getInstance().forEach(ev -> {
                     System.out.println(ev.getDate() + " "  + ev.getDescription());
                 });
                 e.getWindow().dispose();

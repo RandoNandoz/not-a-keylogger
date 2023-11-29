@@ -1,5 +1,6 @@
 package model;
 
+import model.logging.Event;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

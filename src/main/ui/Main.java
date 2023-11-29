@@ -1,5 +1,8 @@
 package ui;
 
+import ui.cli.ConsoleApp;
+import ui.gui.GuiApp;
+
 import javax.swing.*;
 
 /**

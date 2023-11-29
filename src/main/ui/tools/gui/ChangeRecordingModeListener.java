@@ -1,15 +1,11 @@
 package ui.tools.gui;
 
-import model.InputRecording;
-import model.InputTime;
 import ui.AppState;
-import ui.GuiApp;
 import ui.tools.RecordingController;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Changes recording mode

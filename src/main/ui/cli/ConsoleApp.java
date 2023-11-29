@@ -1,4 +1,4 @@
-package ui;
+package ui.cli;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +16,7 @@ import model.KeyboardInputTime;
 import model.MouseInputTime;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.AppState;
 import ui.tools.CaptureTool;
 
 /**
