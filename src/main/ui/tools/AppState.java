@@ -4,7 +4,7 @@ package ui.tools;
  * Singleton to hold app's state of whether recording or not
  */
 public class AppState {
-    private static AppState singleton;
+    private static final AppState singleton = new AppState();
     private boolean recording;
 
     // EFFECTS: creates a new UNIQUE state of our app's state
@@ -15,9 +15,6 @@ public class AppState {
     // MODIFIES: this
     // EFFECTS: returns the unique instance of app state, otherwise, create a new one.
     public static AppState getInstance() {
-        if (null == AppState.singleton) {
-            singleton = new AppState();
-        }
         return singleton;
     }
 
