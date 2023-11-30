@@ -49,3 +49,21 @@ For instance:
 - You can save the state of my app by going to the bar and file > save
 - You can load the state of my app by going to the bar and file > load
 
+### Phase 4: Task 3
+
+A refactor I could have made was turn `RecordingController` into a singleton, rather than using dependency injection
+however, this comes with tradeoffs. First of all, the singleton design pattern violates the SRP (it manages its own instantiation, and also does other things), and a usage of a singleton
+as what is essentially a global variable for the objects in the app is a poor design choice that would increase my coupling.
+
+Secondly, if we were to test the ui package, the singleton would make unit testing much harder, as my listeners are now implicitly
+depending on `RecordingController`, and rather than passing a fake `RecordingController` in, I would have to somehow control the state of the
+`RecordingController` singleton. In my view, the singleton pattern is quite harmful, and should be used less. This comes from experience
+as I used to (and still do, to be honest) use them as a quick hack for my own projects, and when it came time to refactor, every class would somehow be dependent on this
+god object.
+
+I could have also re-factored `AppState` to not be a singleton, and instead pass it around. I had intended to refactor my app to eliminate it (see previous rant on why singletons are bad),
+however, I got lazy and I had other things to do than work on this project, so I opted not to. However, this refactor might not
+improve the design much, because then this would give the `RecordingController` more responsibilities, again violating the SRP.
+
+Lastly, `RecordingController` should really be refactored. Currently it's in charge of both maintaining a collection of input recordings, editing them,
+and updating the UI. To improve the cohesion of the system, I would split it up into a `RecordingManager` and `UIManager` class.
