@@ -9,12 +9,12 @@ import model.InputRecording;
 import model.KeyPress;
 import model.KeyboardInputTime;
 import model.MouseInputTime;
-import ui.AppState;
 
 /**
  * Implementation of listeners to store captured inputs into arraylists
  */
 public class CaptureTool implements NativeKeyListener, NativeMouseInputListener {
+    private final AppState appState;
     private InputRecording<KeyboardInputTime> keyboardCaptures;
     private InputRecording<MouseInputTime> mouseCaptures;
 
@@ -22,6 +22,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     public CaptureTool() {
         this.keyboardCaptures = null;
         this.mouseCaptures = null;
+        appState = AppState.getInstance();
     }
 
     // MODIFIES: this
@@ -29,7 +30,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // and the time it was pressed to the keyboard captures list
     @Override
     public void nativeKeyPressed(NativeKeyEvent nativeEvent) {
-        if (AppState.getInstance().isRecording()) {
+        if (appState.isRecording()) {
             this.keyboardCaptures.addKey(new KeyboardInputTime(
                     nativeEvent.getKeyCode(),
                     KeyPress.UP,
@@ -43,7 +44,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // and the time it was pressed to the keyboard captures list
     @Override
     public void nativeKeyReleased(NativeKeyEvent nativeEvent) {
-        if (AppState.getInstance().isRecording()) {
+        if (appState.isRecording()) {
             this.keyboardCaptures.addKey(new KeyboardInputTime(
                     nativeEvent.getKeyCode(),
                     KeyPress.DOWN,
@@ -56,7 +57,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // EFFECTS: adds mouse event when mouse pressed, and the time it was pressed.
     @Override
     public void nativeMousePressed(NativeMouseEvent e) {
-        if (AppState.getInstance().isRecording()) {
+        if (appState.isRecording()) {
             this.mouseCaptures.addKey(
                     new MouseInputTime(
                             e,
@@ -69,7 +70,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // EFFECTS: adds mouse event when mouse released and its time it pressed.
     @Override
     public void nativeMouseReleased(NativeMouseEvent e) {
-        if (AppState.getInstance().isRecording()) {
+        if (appState.isRecording()) {
             this.mouseCaptures.addKey(
                     new MouseInputTime(
                             e,
@@ -83,7 +84,7 @@ public class CaptureTool implements NativeKeyListener, NativeMouseInputListener 
     // EFFECTS: adds mouse event when mouse moved and time pressed.
     @Override
     public void nativeMouseMoved(NativeMouseEvent e) {
-        if (AppState.getInstance().isRecording()) {
+        if (appState.isRecording()) {
             this.mouseCaptures.addKey(
                     new MouseInputTime(
                             e,

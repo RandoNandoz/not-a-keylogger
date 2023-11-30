@@ -16,7 +16,7 @@ import model.KeyboardInputTime;
 import model.MouseInputTime;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import ui.AppState;
+import ui.tools.AppState;
 import ui.tools.CaptureTool;
 
 /**

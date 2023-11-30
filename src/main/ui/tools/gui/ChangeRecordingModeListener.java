@@ -1,6 +1,6 @@
 package ui.tools.gui;
 
-import ui.AppState;
+import ui.tools.AppState;
 import ui.tools.RecordingController;
 
 import javax.swing.*;
@@ -13,12 +13,14 @@ import java.awt.event.ActionListener;
 public class ChangeRecordingModeListener implements ActionListener {
     private final JButton clientButton;
     private final RecordingController rc;
+    private final AppState appState;
 
     // EFFECTS: Creates listener to enable/disable recording status, with button that has this listener, and
     // app's recording controller
     public ChangeRecordingModeListener(JButton b, RecordingController rc) {
         this.clientButton = b;
         this.rc = rc;
+        appState = AppState.getInstance();
     }
 
 
@@ -32,10 +34,10 @@ public class ChangeRecordingModeListener implements ActionListener {
     // switches button label to "Stop Recording" if current state is recording,
     // switches button label to "Start Recording" if current state is not recording.
     private void toggleButtonLabel() {
-        boolean oldRecordingState = AppState.getInstance().isRecording();
+        boolean oldRecordingState = appState.isRecording();
         // invert the recording state
         boolean newRecordingState = !oldRecordingState;
-        AppState.getInstance().setRecording(newRecordingState);
+        appState.setRecording(newRecordingState);
 
         String infoString = String.format("Previous app state was recording=%s, new state is recording=%s.",
                 oldRecordingState, newRecordingState);

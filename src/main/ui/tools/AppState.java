@@ -1,4 +1,4 @@
-package ui;
+package ui.tools;
 
 /**
  * Singleton to hold app's state of whether recording or not
