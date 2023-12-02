@@ -67,3 +67,52 @@ improve the design much, because then this would give the `RecordingController` 
 
 Lastly, `RecordingController` should really be refactored. Currently it's in charge of both maintaining a collection of input recordings, editing them,
 and updating the UI. To improve the cohesion of the system, I would split it up into a `RecordingManager` and `UIManager` class.
+
+Sample Logs:
+
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:47 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:48 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:48 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:48 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:48 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:49 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:50 PST 2023 Added new input to input recording list!
+Fri Dec 01 23:41:51 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:51 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:52 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:52 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:52 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:53 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:54 PST 2023 Deleting input at index 0
+Fri Dec 01 23:41:54 PST 2023 Deleting input at index 0
