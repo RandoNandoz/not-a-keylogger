@@ -1,0 +1,14 @@
+{
+  "inputs": [
+    {
+      "id": 1,
+      "modifiers": 2,
+      "x": 3,
+      "y": 4,
+      "clickCount": 1,
+      "button": 3,
+      "nsRecordedTimeStamp": 20
+    }
+  ],
+  "startTime": 10
+}
